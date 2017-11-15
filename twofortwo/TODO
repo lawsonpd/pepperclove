@@ -1,0 +1,10 @@
+1. After registering, user should be automatically authenticated and then sent to main page.
+
+2. Create custom user.
+   - need custom registration, login, profile management, authentication
+
+3. Only show contact info *after* bid has been chosen.
+
+4. When offer is rendered, pass in duration and display a countdown timer with javascript.
+
+5. Show number of bids for each offer.

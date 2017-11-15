@@ -1,0 +1,18 @@
+<form method="post" action="/register/">
+  {% csrf_token %}
+  <p><input type="text" name="username" placeholder="Username" /></p>
+  <p><input type="password" name="password" placeholder="Password" /></p>
+  <p><input type="text" name="name" placeholder="Business name" /></p>
+  <p><input type="text" name="email" placeholder="Business email" /></p>
+  <p><input type="text" name="phone" placeholder="Phone" /></p>
+  <p><input type="text" name="address" placeholder="Business street address" /></p>
+  <p><input type="text" name="zipcode" placeholder="Zip code" /></p>
+  <p>
+  <label for="category">Type of business</label>
+  <select name="category">
+      <option>Restaurant</option>
+      <option>Other</option>
+    </select>
+  </p>
+  <p><input type="submit" value="Submit" /></p>
+</form>

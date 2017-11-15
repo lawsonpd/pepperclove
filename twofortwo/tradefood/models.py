@@ -22,10 +22,10 @@ class Merchant(models.Model):
   verified = models.BooleanField(default=False)
 
   RESTO = 'RESTAURANT'
-  GEN_FOOD = 'GEN FOOD'
+  OTHER = 'OTHER'
   CATEGORIES = (
     (RESTO, 'Restaurant'),
-    (GEN_FOOD, 'Food'),
+    (OTHER, 'Other'),
   )
   category = models.CharField(
     max_length=30,
@@ -41,7 +41,7 @@ class Offer(models.Model):
   retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
   contact_name = models.CharField(max_length=30)
   contact_phone = models.CharField(max_length=16)
-  date_posted = models.DateTimeField(auto_now_add=True)
+  date_posted = models.DateTimeField(default=now)
   expiry = models.DateTimeField()
 
   THIRTY_MIN = 0.5/24.0
@@ -76,7 +76,7 @@ class Bid(models.Model):
   contact_phone = models.CharField(max_length=16)
   offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
   accepted = models.BooleanField(default=False)
-  date_posted = models.DateTimeField(auto_now_add=True)
+  date_posted = models.DateTimeField(default=now)
   expiry = models.DateTimeField()
 
   THIRTY_MIN = 0.5/24.0
