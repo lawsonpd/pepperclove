@@ -34,3 +34,10 @@ def submit_offer(request):
   else:
     form = OfferForm()
   return render(request, 'tradefood/all_offers.html', {'form': form})
+
+def register(request):
+  if request.method == 'POST':
+    form = RegisterForm(request.POST)
+    if form.is_valid():
+      form_data = form.cleaned_data
+      
