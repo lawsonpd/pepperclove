@@ -37,26 +37,26 @@ class Merchant(models.Model):
 
 class Offer(models.Model):
   description = models.CharField(max_length=256)
-  merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+  merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, related_name='offers')
   retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
   contact_name = models.CharField(max_length=30)
   contact_phone = models.CharField(max_length=16)
   date_posted = models.DateTimeField(default=now)
   expiry = models.DateTimeField()
 
-  THIRTY_MIN = 0.5/24.0
-  ONE_HR = 1.0/24.0
-  TWO_HRS = 2.0/24.0
-  THREE_HRS = 3.0/24.0
+  # THIRTY_MIN = 0.5/24.0
+  # ONE_HR = 1.0/24.0
+  # TWO_HRS = 2.0/24.0
+  # THREE_HRS = 3.0/24.0
   DURATION_CHOICES = (
-    (THIRTY_MIN, '30 minutes'),
-    (ONE_HR, '1 hour'),
-    (TWO_HRS, '2 hours'),
-    (THREE_HRS, '3 hours'),
+    (0.5, '30 minutes'),
+    (1.0, '1 hour'),
+    (2.0, '2 hours'),
+    (3.0, '3 hours'),
   )
   duration = models.FloatField(
     choices=DURATION_CHOICES,
-    default=ONE_HR,
+    default=1.0,
   )
 
   # expiry = date_posted + timedelta(duration)
@@ -70,28 +70,28 @@ class Offer(models.Model):
 
 class Bid(models.Model):
   description = models.CharField(max_length=256)
-  merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+  merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, related_name='bids')
   retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
   contact_name = models.CharField(max_length=30)
   contact_phone = models.CharField(max_length=16)
-  offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+  offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='bids')
   accepted = models.BooleanField(default=False)
   date_posted = models.DateTimeField(default=now)
   expiry = models.DateTimeField()
 
-  THIRTY_MIN = 0.5/24.0
-  ONE_HR = 1.0/24.0
-  TWO_HRS = 2.0/24.0
-  THREE_HRS = 3.0/24.0
+  # THIRTY_MIN = 0.5/24.0
+  # ONE_HR = 1.0/24.0
+  # TWO_HRS = 2.0/24.0
+  # THREE_HRS = 3.0/24.0
   DURATION_CHOICES = (
-    (THIRTY_MIN, '30 minutes'),
-    (ONE_HR, '1 hour'),
-    (TWO_HRS, '2 hours'),
-    (THREE_HRS, '3 hours'),
+    (0.5, '30 minutes'),
+    (1.0, '1 hour'),
+    (2.0, '2 hours'),
+    (3.0, '3 hours'),
   )
   duration = models.FloatField(
     choices=DURATION_CHOICES,
-    default=ONE_HR,
+    default=1.0,
   )
 
   # expiry = date_posted + timedelta(duration)

@@ -1,14 +1,14 @@
-{% if offers %}
+<h1>Available offers</h1>
   {% for offer in offers %}
     <div class="offer">
-      <p>{{ offer.merchant }}</p>
+      <p>{{ offer.merchant.name }}</p>
       <p>{{ offer.description }}</p>
       {% if offer.retail_value %}
         <p>Retail value: {{ offer.retail_value }}</p>
       {% endif %}
-      <a href="/bid">Place a bid</a>
+      <p>{{ num_bids }} bid{{ num_bids|pluralize }}</p>
+      <a href="/bid/{{ offer.pk }}/">Place a bid</a>
     </div>
+  {% empty %}
+    <h2>No open offers currently.</h2>
   {% endfor %}
-{% else %}
-  <h2>No open offers currently.</h2>
-{% endif %}
