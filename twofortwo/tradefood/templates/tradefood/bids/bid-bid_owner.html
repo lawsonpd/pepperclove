@@ -1,0 +1,14 @@
+<h1>Offer from {{ bid.offer.merchant.name }}</h1>
+
+<h2>{{ bid.offer.description }}</h2>
+
+<h3>Your bid: {{ bid.description }}</h3>
+
+{% if bid.accepted %}
+  <h3>Great news: your bid was accepted by {{ bid.offer.merchant.name }}!</h3>
+  <p>Someone from there should be contacting you soon, but in case they don't here is their contact info:</p>
+  <ul>
+    <li>{{ bid.offer.contact_name }}</li>
+    <li>{{ bid.offer.contact_phone }}</li>
+  </ul>
+{% endif %}

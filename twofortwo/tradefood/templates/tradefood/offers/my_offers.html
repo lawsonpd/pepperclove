@@ -1,0 +1,9 @@
+<h1>My offers</h1>
+  {% for offer in offers %}
+    <div class="offer">
+      <p>{{ offer.description }}</p>
+      <a href="/offers/{{ offer.pk }}/">Details</a>
+    </div>
+  {% empty %}
+    <h2>You have no open offers.</h2>
+  {% endfor %}

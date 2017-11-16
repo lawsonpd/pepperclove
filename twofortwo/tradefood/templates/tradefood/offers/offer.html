@@ -1,0 +1,16 @@
+<h1>{{ offer.description }}</h1>
+<h2>from {{ offer.merchant.name }}</h2>
+{% if offer.retail_value %}
+  <p>Retail value: ${{ offer.retail_value }}</p>
+{% endif %}
+
+{% if bids != 'NA' %}
+  {% for bid in bids %}
+    <h3>Bids:</h3>
+    <a href="/bids/{{ bid.pk}}/">{{ bid.description }}</p>
+  {% empty %}
+    <p>No bids.</p>
+  {% endfor %}
+{% endif %}
+
+<a href="/bid/{{ offer.pk }}/">Place a bid</a>

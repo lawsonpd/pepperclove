@@ -43,6 +43,7 @@ class Offer(models.Model):
   contact_phone = models.CharField(max_length=16)
   date_posted = models.DateTimeField(default=now)
   expiry = models.DateTimeField()
+  available = models.BooleanField(default=True)
 
   # THIRTY_MIN = 0.5/24.0
   # ONE_HR = 1.0/24.0

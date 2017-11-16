@@ -1,0 +1,12 @@
+<h1>My bids</h1>
+  {% for bid in bids %}
+    <div class="bid">
+      <p>{{ bid.description }}</p>
+      {% if bid.accepted %}
+        <p><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
+      {% endif %}
+      <a href="/bids/{{ bid.pk }}/">Details</a>
+    </div>
+  {% empty %}
+    <h2>You have no open bids.</h2>
+  {% endfor %}

@@ -58,9 +58,28 @@ def root_redirect(request):
   return redirect('/offers/')
 
 @login_required(login_url='/login/')
-def all_offers(request):
-  offers = Offer.objects.filter(expiry__gt=now())
-  return render(request, 'tradefood/offers.html', {'offers': offers})
+def open_offers(request):
+  # u = User.objects.get(username=request.user)
+  # merch = Merchant.objects.get(user=u)
+  # offers = Offer.objects.exclude(expiry__lte=now())
+
+  offers = Offer.objects.filter(expiry__gt=now(), available=True)
+  return render(request, 'tradefood/offers/offers.html', {'offers': offers})
+
+@login_required(login_url='/login/')
+def offer_details(request, offer_pk):
+  if request.method == 'GET':
+    u = User.objects.get(username=request.user)
+    merch = Merchant.objects.get(user=u)
+
+    offer = Offer.objects.get(pk=offer_pk)
+
+    if offer.merchant != merch:
+      bids = 'NA'
+    else:
+      bids = offer.bids.filter(expiry__gt=now())
+
+    return render(request, 'tradefood/offers/offer.html', {'offer': offer, 'bids': bids})
 
 @login_required(login_url='/login/')
 def submit_offer(request):
@@ -117,13 +136,79 @@ def submit_bid(request, offer_pk):
   else:
     this_offer = Offer.objects.get(pk=offer_pk)
     form = BidForm()
+
     return render(
       request,
-      'tradefood/bid.html',
+      'tradefood/place_bid.html',
       {
        'form': form,
        'offer_pk': offer_pk,
        'description': this_offer.description,
-       'merchant': this_offer.merchant.name
+       'merchant': this_offer.merchant.name,
+       # 'retail_value': this_offer.retail_value,
+       # 'num_bids': this_offer.bids.all().count()
+      }
+    )
+
+@login_required(login_url='/login/')
+def my_bids(request):
+  u = User.objects.get(username=request.user)
+  merch = Merchant.objects.get(user=u)
+
+  # get bids from today
+  bids = merch.bids.filter(date_posted__date=now().date())
+
+  return render(request, 'tradefood/bids/my_bids.html', {'bids': bids})
+
+@login_required(login_url='/login/')
+def my_offers(request):
+  u = User.objects.get(username=request.user)
+  merch = Merchant.objects.get(user=u)
+
+  offers = merch.offers.filter(expiry__gt=now())
+
+  return render(request, 'tradefood/my_offers.html', {'offers': offers})
+
+@login_required(login_url='/login/')
+def bid_details(request, bid_pk):
+  u = User.objects.get(username=request.user)
+  merch = Merchant.objects.get(user=u)
+
+  bid = Bid.objects.get(pk=bid_pk)
+
+  if bid.offer.merchant == merch:
+    return render(request, 'tradefood/bids/bid-offer_owner.html', {'bid': bid, 'owns_offer': True})
+  elif bid.merchant == merch:
+    return render(request, 'tradefood/bids/bid-bid_owner.html', {'bid': bid, 'owns_bid': True})
+  else:
+    return render(request, 'tradefood/forbidden.html')
+
+@login_required(login_url='/login/')
+def accept_bid(request, bid_pk):
+  if request.method == 'POST':
+    u = User.objects.get(username=request.user)
+    merch = Merchant.objects.get(user=u)
+
+    bid = Bid.objects.get(pk=bid_pk)
+    offer = bid.offer
+
+    if offer.merchant != merch:
+      return render(request, 'tradefood/forbidden.html')
+
+    offer.available = False
+    offer.save()
+
+    bid.accepted = True
+    bid.save()
+
+    return render(
+      request,
+      'tradefood/bid_accepted.html',
+      {
+        'offer_desc': offer.description,
+        'bid_desc': bid.description,
+        'bidding_merchant': bid.merchant.name,
+        'bid_contact_name': bid.contact_name,
+        'bid_contact_phone': bid.contact_phone,
       }
     )

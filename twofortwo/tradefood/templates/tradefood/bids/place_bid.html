@@ -1,5 +1,7 @@
-<h1>Place a bid</h1>
-<h2>For {{ description }} from {{ merchant }}</h2>
+<h1>Place a bid for</h1>
+<h2>{{ description }}</h2>
+<h3>from {{ merchant }}</h3>
+
 <form method="post" action="/bid/{{ offer_pk }}/">
   {% csrf_token %}
   {{ form.as_p }}

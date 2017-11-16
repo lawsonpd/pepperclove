@@ -5,6 +5,10 @@ if there are two restaurants that didn't win a bid, then suggest they trade betw
 
 * businesses need to have their profiles verified (make several at the beginning for restaurants we already trade with)
 
+should 'my offers' and 'my bids' be routed at '/offers/<merchant>/' & '/bids/<merchant>/'?
+
+somehow need to get the no. of bids for an offer to show on the main offers page.
+
 
 
 checkout:
