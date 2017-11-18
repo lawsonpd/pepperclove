@@ -39,7 +39,6 @@ class OfferTestCase1(TestCase):
       retail_value=18.56,
       contact_name='John',
       contact_phone='615-444-5555',
-      duration=2.0,
       expiry=now() + timedelta(2.0/24.0)
     )
 
@@ -51,7 +50,6 @@ class OfferTestCase1(TestCase):
       contact_name='Nancy',
       contact_phone='615-333-6666',
       offer=Offer.objects.get(description='1 dozen chocolate chip cookies'),
-      duration=1.0,
       expiry=now() + timedelta(1.0/24.0)
     )
 
@@ -61,15 +59,19 @@ class OfferTestCase1(TestCase):
     assert test_offer.is_alive()
 
   def test_expiration_db_create(self):
+    offer_post_date = now()
+
     test_offer = Offer.objects.create(
       description='chicken',
       merchant=Merchant.objects.get(name='Test Merchant 1'),
       retail_value='0.0',
       contact_name='John',
       contact_phone='615-666-8888',
-      duration=1.0,
-      expiry=now() + timedelta(1.0/24.0)
+      date_posted=offer_post_date,
+      expiry=offer_post_date + timedelta(1.0/24.0)
     )
+
+    bid_post_date = now() + timedelta(0.25/24.0)
 
     test_bid = Bid.objects.create(
       description='cookies',
@@ -78,16 +80,15 @@ class OfferTestCase1(TestCase):
       retail_value='0.0',
       contact_name='Tom',
       contact_phone='615-999-3333',
-      duration=0.5,
-      expiry=now() + timedelta(0.5/24.0)
+      date_posted=bid_post_date,
+      expiry=bid_post_date + timedelta(0.5/24.0)
     )
 
     assert test_offer.is_alive()
     assert test_bid.is_alive()
-    assert test_offer.date_posted + timedelta(test_offer.duration/24.0) > test_bid.date_posted + timedelta(test_bid.duration/24.0)
-    print test_offer.date_posted + timedelta(test_offer.duration/24.0), test_offer.expiry
-    assert test_offer.date_posted + timedelta(test_offer.duration/24.0) == test_offer.expiry
-    assert (now() + timedelta(0.5/24.0)) - (test_bid.date_posted + timedelta(test_bid.duration/24.0)) < timedelta(0.5/24.0)
+    assert test_offer.date_posted + timedelta(1.0/24.0) > test_bid.date_posted + timedelta(0.5/24.0)
+    assert test_offer.date_posted + timedelta(1.0/24.0) == test_offer.expiry
+    assert (now() + timedelta(0.5/24.0)) - (test_bid.date_posted + timedelta(0.5/24.0)) < timedelta(0.5/24.0)
 
 
 
@@ -118,7 +119,6 @@ class OfferTestCase2(TestCase):
       retail_value=18.56,
       contact_name='John',
       contact_phone='615-444-5555',
-      duration=2.0,
       expiry=now() + timedelta(2.0/24.0)
     )
 
@@ -131,7 +131,6 @@ class OfferTestCase2(TestCase):
       'retail_value': '0.0',
       'contact_name': 'John',
       'contact_phone': '615-666-8888',
-      'duration': 1.0,
       'expiry': now() + timedelta(1.0/24.0)
     }
 
@@ -144,7 +143,6 @@ class OfferTestCase2(TestCase):
       'retail_value': '0.0',
       'contact_name': 'Tom',
       'contact_phone': '615-999-3333',
-      'duration': 0.5,
       'expiry': now() + timedelta(0.5/24.0)
     }
 
