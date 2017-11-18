@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
-from django.utils.timezone import now, timedelta
+from django.utils.timezone import now
 
 
 class Merchant(models.Model):
@@ -41,13 +41,11 @@ class Offer(models.Model):
   retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
   contact_name = models.CharField(max_length=30)
   contact_phone = models.CharField(max_length=16)
-  date_posted = models.DateTimeField(default=now)
+  date_posted = models.DateTimeField()
   expiry = models.DateTimeField()
   # available is False when bid has been accepted for offer
   available = models.BooleanField(default=True)
   bid_accepted = models.BooleanField(default=False)
-
-  # expiry = date_posted + timedelta(duration)
 
   def is_alive(self):
     time_now = now()
@@ -62,11 +60,10 @@ class Bid(models.Model):
   contact_name = models.CharField(max_length=30)
   contact_phone = models.CharField(max_length=16)
   offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='bids')
+  # accepted is True when bid is accepted for offer
   accepted = models.BooleanField(default=False)
-  date_posted = models.DateTimeField(default=now)
+  date_posted = models.DateTimeField()
   expiry = models.DateTimeField()
-
-  # expiry = date_posted + timedelta(duration)
 
   def is_alive(self):
     time_now = now()
