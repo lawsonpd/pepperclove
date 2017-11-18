@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from tradefood.forms import *
+from tradefood.forms import OfferFormCustom, BidFormCustom
 from tradefood.models import Merchant, Offer, Bid
 from tradefood.utilities import is_alive
 
@@ -106,7 +106,7 @@ def offer_details(request, offer_pk):
 @login_required(login_url='/login/')
 def submit_offer(request):
   if request.method == 'POST':
-    form = OfferForm(request.POST)
+    form = OfferFormCustom(request.POST)
     if form.is_valid():
       u = User.objects.get(username=request.user)
       merch = Merchant.objects.get(user=u)
@@ -122,19 +122,18 @@ def submit_offer(request):
         contact_name=form_data['contact_name'],
         contact_phone=form_data['contact_phone'],
         date_posted=time_post,
-        duration=form_data['duration'],
         expiry=offer_expiry,
       )
 
       return redirect('/my-offers/')
   else:
-    form = OfferForm()
+    form = OfferFormCustom()
   return render(request, 'tradefood/offers/trade.html', {'form': form})
 
 @login_required(login_url='/login/')
 def submit_bid(request, offer_pk):
   if request.method == 'POST':
-    form = BidForm(request.POST)
+    form = BidFormCustom(request.POST)
     if form.is_valid():
       u = User.objects.get(username=request.user)
       merch = Merchant.objects.get(user=u)
@@ -156,14 +155,13 @@ def submit_bid(request, offer_pk):
         contact_name=form_data['contact_name'],
         contact_phone=form_data['contact_phone'],
         date_posted=time_post,
-        duration=form_data['duration'],
         expiry=bid_expiry,
       )
 
       return redirect('/my-bids/')
   else:
     this_offer = Offer.objects.get(pk=offer_pk)
-    form = BidForm()
+    form = BidFormCustom()
 
     return render(
       request,
