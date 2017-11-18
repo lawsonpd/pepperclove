@@ -1,11 +1,10 @@
-{% load bootstrap3 %}
-
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load bootstrap3 %}
+
+  {% bootstrap_css %}
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,11 +14,17 @@
   <style>
     h1 {
       font-family: 'Pacifico', cursive;
+      margin-bottom: 50px;
     }
     body {
       font-family: 'Open Sans', sans-serif;
     }
+    .jumbotron {
+      margin-top: 40px;
+    }
   </style>
+
+  {% block custom_css %}{% endblock %}
 </head>
 
 <body style="padding-top: 50px; padding-bottom: 20px;">
@@ -62,8 +67,8 @@
     </div>
   </nav>
 
-  <div class="jumbotron">
-    <div class="container">
+  <div class="container">
+    <div class="jumbotron">
       {% block error %}
         <p class="lead text-warning">{{ error_message }}</p>
       {% endblock %}
@@ -71,5 +76,7 @@
     </div>
   </div>
 
+  {% bootstrap_javascript %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </body>
 </html>

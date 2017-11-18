@@ -23,7 +23,7 @@ DURATION_CHOICES = (
 
 class OfferFormCustom(forms.Form):
   description = forms.CharField(label="Description", max_length=100)
-  retail_value = forms.FloatField(label="Retail value", required=False)
+  retail_value = forms.FloatField(label="Retail value", required=False, localize=True)
   contact_name = forms.CharField(label="Contact name")
   contact_phone = forms.CharField(label="Contact phone")
   duration = forms.ChoiceField(
@@ -34,7 +34,7 @@ class OfferFormCustom(forms.Form):
 
 class BidFormCustom(forms.Form):
   description = forms.CharField(label="Description", max_length=100)
-  retail_value = forms.FloatField(label="Retail value", required=False)
+  retail_value = forms.FloatField(label="Retail value", required=False, localize=True)
   contact_name = forms.CharField(label="Contact name")
   contact_phone = forms.CharField(label="Contact phone")
   duration = forms.ChoiceField(

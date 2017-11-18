@@ -113,12 +113,15 @@ def submit_offer(request):
 
       form_data = form.cleaned_data
       time_post = now()
-      offer_expiry = time_post + timedelta(form_data['duration']/24.0)
+      duration = timedelta(float(form_data['duration'])/24.0)
+      offer_expiry = time_post + duration
+
+      rv = form_data['retail_value'] or None
 
       offer = Offer.objects.create(
         description=form_data['description'],
         merchant=merch,
-        retail_value=form_data['retail_value'],
+        retail_value=rv,
         contact_name=form_data['contact_name'],
         contact_phone=form_data['contact_phone'],
         date_posted=time_post,
@@ -145,13 +148,15 @@ def submit_bid(request, offer_pk):
 
       form_data = form.cleaned_data
       time_post = now()
-      bid_expiry = time_post + timedelta(form_data['duration']/24.0)
+      bid_expiry = time_post + timedelta(float(form_data['duration'])/24.0)
+
+      rv = form_data['retail_value'] or None
 
       bid = Bid.objects.create(
         description=form_data['description'],
         merchant=merch,
         offer=this_offer,
-        retail_value=form_data['retail_value'],
+        retail_value=rv,
         contact_name=form_data['contact_name'],
         contact_phone=form_data['contact_phone'],
         date_posted=time_post,
@@ -189,10 +194,10 @@ def my_bids(request):
   )
 
   # e = [is_alive(bid) for bid in bids]
-  alive_bids = [bid for bid in bids if bid.is_alive()]
+  # alive_bids = [bid for bid in bids if bid.is_alive()]
 
   # return render(request, 'tradefood/bids/my_bids.html', {'bid_data': zip(bids, e)})
-  return render(request, 'tradefood/bids/my_bids.html', {'bids': alive_bids})
+  return render(request, 'tradefood/bids/my_bids.html', {'bids': bids})
 
 @login_required(login_url='/login/')
 def my_offers(request):
@@ -206,10 +211,10 @@ def my_offers(request):
   )
 
   # e = [is_alive(offer) for offer in offers]
-  alive_offers = [offer for offer in offers if offer.is_alive()]
+  # alive_offers = [offer for offer in offers if offer.is_alive()]
 
   # return render(request, 'tradefood/bids/my_offers.html', {'offer_data': zip(offers, e)})
-  return render(request, 'tradefood/offers/my_offers.html', {'offers': alive_offers})
+  return render(request, 'tradefood/offers/my_offers.html', {'offers': offers})
 
 @login_required(login_url='/login/')
 def bid_details(request, bid_pk):

@@ -38,7 +38,7 @@ class Merchant(models.Model):
 class Offer(models.Model):
   description = models.CharField(max_length=256)
   merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, related_name='offers')
-  retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
+  retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
   contact_name = models.CharField(max_length=30)
   contact_phone = models.CharField(max_length=16)
   date_posted = models.DateTimeField()
@@ -56,7 +56,7 @@ class Offer(models.Model):
 class Bid(models.Model):
   description = models.CharField(max_length=256)
   merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, related_name='bids')
-  retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
+  retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
   contact_name = models.CharField(max_length=30)
   contact_phone = models.CharField(max_length=16)
   offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='bids')

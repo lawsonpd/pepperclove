@@ -1,15 +1,18 @@
 {% extends "tradefood/base.html" %}
 
+{% load bootstrap3 %}
+
 {% block content %}
 
-<h1>Place a bid for</h1>
-<h2 class="text-info">{{ description }}</h2>
-<h3 class="text-info">from {{ merchant }}</h3>
+<h1>Place a bid</h1>
+<p class="text-info">for {{ description }} from {{ merchant }}</p>
 
 <form method="post" action="/bid/{{ offer_pk }}/">
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit" />
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  {% endbuttons %}
 </form>
 
 {% endblock %}

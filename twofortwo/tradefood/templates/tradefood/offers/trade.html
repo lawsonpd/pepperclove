@@ -1,12 +1,17 @@
 {% extends "tradefood/base.html" %}
 
+{% load bootstrap3 %}
+
 {% block content %}
 
 <h1>Offer something to trade</h1>
+
 <form method="post" action="/trade/">
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit" />
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  {% endbuttons %}
 </form>
 
 {% endblock %}

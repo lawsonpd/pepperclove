@@ -13,7 +13,9 @@
 
 7. A user should (probably) be warned before placing a duplicate bid for an order. (Would they ever want to submit two bids? Is that fair? Why or why not?)
 
-8. Do we even need to store the duration on the model? Can't we just ask for it at submission, use it to calculate the expiry (which we will store), and then discard it?
+RESOLVED 8. Do we even need to store the duration on the model? Can't we just ask for it at submission, use it to calculate the expiry (which we will store), and then discard it?
+
+9. When user submits offer or bid, check that they haven't made the same offer/bid the same day.
 
 
 TEST:
