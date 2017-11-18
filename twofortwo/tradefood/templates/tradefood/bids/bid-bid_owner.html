@@ -1,3 +1,7 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
 <h1>Offer from {{ bid.offer.merchant.name }}</h1>
 
 <h2>{{ bid.offer.description }}</h2>
@@ -12,3 +16,5 @@
     <li>{{ bid.offer.contact_phone }}</li>
   </ul>
 {% endif %}
+
+{% endblock %}

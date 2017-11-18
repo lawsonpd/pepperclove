@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-</head>
+{% extends "tradefood/base.html" %}
 
-<body>
+{% block navbar_right %}
+{% endblock %}
+
+{% block content %}
+
+<h2>Log in </h2>
 
   <form method="post" action="/login/">
     {% csrf_token %}
     <p><input type="text" name="username" placeholder="Username" /></p>
     <p><input type="password" name="password" placeholder="Password" /></p>
-    <p><input type="submit" value="Submit" /></p>
+    {# <p><input type="submit" value="Submit" /></p> #}
+    <button type="submit" class="btn btn-success">Submit</button>
   </form>
 
-</body>
-</html>
+{% endblock %}

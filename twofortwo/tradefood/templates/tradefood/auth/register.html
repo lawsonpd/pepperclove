@@ -1,3 +1,9 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
+<h2>Register</h2>
+
 <form method="post" action="/register/">
   {% csrf_token %}
   <p><input type="text" name="username" placeholder="Username" /></p>
@@ -16,3 +22,5 @@
   </p>
   <p><input type="submit" value="Submit" /></p>
 </form>
+
+{% endblock %}

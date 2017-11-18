@@ -1,8 +1,17 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
 <h1>Bid from {{ bid.merchant.name }}</h1>
 
 <h2>{{ bid.description }}</h2>
+{% if bid.retail_value %}
+  <p>Retail value ${{ bid.retail_value }}</p>
+{% endif %}
 
 <form method="post" action="/accept-bid/{{ bid.pk }}/">
   {% csrf_token %}
   <input type="submit" value="Accept bid" />
 </form>
+
+{% endblock %}

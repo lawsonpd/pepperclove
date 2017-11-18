@@ -1,16 +1,32 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
 <h1>{{ offer.description }}</h1>
-<h2>from {{ offer.merchant.name }}</h2>
-{% if offer.retail_value %}
-  <p>Retail value: ${{ offer.retail_value }}</p>
+{% if not offer_owner %}
+  <h2>from {{ offer.merchant.name }}</h2>
 {% endif %}
 
-{% if bids != 'NA' %}
-  {% for bid in bids %}
-    <h3>Bids:</h3>
-    <a href="/bids/{{ bid.pk}}/">{{ bid.description }}</p>
-  {% empty %}
-    <p>No bids.</p>
-  {% endfor %}
+{% if offer_owner %}
+  {% if offer.bid_accepted %}
+    <p>You accepted the bid from {{ winning_bid.merchant.name }} for {{ winning_bid.description}}!</p>
+    <p>Give them a call to arrange the trade:</p>
+    <ul>
+      <li>Contact {{ winning_bid.contact_name }}</li>
+      <li>{{ winning_bid.contact_phone }}</li>
+    </ul>
+  {% else %}
+    {% for bid in bids %}
+      <h3>Bids:</h3>
+      <p class="lead"><a href="/bids/{{ bid.pk}}/">{{ bid.description }}</a></p>
+    {% empty %}
+      <p>No bids.</p>
+    {% endfor %}
+  {% endif %}
 {% endif %}
 
-<a href="/bid/{{ offer.pk }}/">Place a bid</a>
+{% if not offer_owner %}
+  <a href="/bid/{{ offer.pk }}/">Place a bid</a>
+{% endif %}
+
+{% endblock %}

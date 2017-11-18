@@ -44,6 +44,7 @@ class Offer(models.Model):
   date_posted = models.DateTimeField(default=now)
   expiry = models.DateTimeField()
   available = models.BooleanField(default=True)
+  bid_accepted = models.BooleanField(default=False)
 
   # THIRTY_MIN = 0.5/24.0
   # ONE_HR = 1.0/24.0
@@ -62,10 +63,14 @@ class Offer(models.Model):
 
   # expiry = date_posted + timedelta(duration)
 
-  # def is_alive(self):
-  #   time_now = now()
-  #   expiry = self.date_posted + timedelta(self.duration)
-  #   return expiry > time_now
+  def is_alive(self):
+    time_now = now()
+    expiry = self.date_posted + timedelta(self.duration/24.0)
+    return expiry > time_now
+
+  def is_alive2(self):
+    time_now = now()
+    return self.expiry > time_now
 
 
 
@@ -97,11 +102,11 @@ class Bid(models.Model):
 
   # expiry = date_posted + timedelta(duration)
 
-  # def is_alive(self):
-  #   time_now = now()
-  #   return self.expiry > time_now
+  def is_alive(self):
+    time_now = now()
+    expiry = self.date_posted + timedelta(self.duration/24.0)
+    return expiry > time_now
 
-  # def is_alive(self):
-  #   time_now = now()
-  #   expiry = self.date_posted + timedelta(self.duration)
-  #   return expiry > time_now
+  def is_alive2(self):
+    time_now = now()
+    return self.expiry > time_now

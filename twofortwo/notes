@@ -23,3 +23,10 @@ checkout:
       return HttpResponse(template.render(context, request))
 - formsets
 - proxy models (for custom user stuff)
+
+
+
+NAMES:
+pepper.club
+clove.club
+pepperclove.club

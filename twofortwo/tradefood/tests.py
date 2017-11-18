@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.test import Client
 
 # Create your tests here.
 
@@ -54,7 +55,29 @@ class OfferTestCase(TestCase):
     assert is_alive(test_bid)
     assert is_alive(test_offer)
 
-    # print test_offer.date_posted + timedelta(test_offer.duration)
-    # print test_bid.date_posted + timedelta(test_bid.duration)
-    # print ''
-    # print 'now: ', now()
+  def test_expiration(self):
+    c = Client()
+
+    test_offer_data = {
+      'description': 'chicken',
+      'merchant': Merchant.objects.get(username='hattieb-charlotte'),
+      'retail_value': '0.0',
+      'contact_name': 'John',
+      'contact_phone': '615-666-8888',
+      'duration': 1.0
+    }
+
+    test_submit_offer_res = c.post('/trade/', test_offer_data)
+
+    test_bid_data = {
+      'description': 'cookies',
+      'merchant': Merchant.objects.get(username='jakesbakes'),
+      'retail_value': '0.0',
+      'contact_name': 'Tom',
+      'contact_phone': '615-999-3333',
+      'duration': 0.5
+    }
+
+    test_submit_bid_res = c.post('/bid/{0}'.format(test_submit_offer_res), test_bid_data)
+
+    assert True

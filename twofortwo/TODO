@@ -8,3 +8,11 @@
 4. When offer is rendered, pass in duration and display a countdown timer with javascript.
 
 5. Show number of bids for each offer.
+
+6. ** If a place's bid is accepted, the other bids should be voided. (Make this an option the user can set?)
+
+7. A user should (probably) be warned before placing a duplicate bid for an order. (Would they ever want to submit two bids? Is that fair? Why or why not?)
+
+
+TEST:
+- 

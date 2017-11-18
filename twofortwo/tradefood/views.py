@@ -4,14 +4,17 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from django.utils.timezone import timedelta, now
 
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from tradefood.forms import *
 from tradefood.models import Merchant, Offer, Bid
+from tradefood.utilities import is_alive
 
 # Create your views here.
 
@@ -38,7 +41,7 @@ def register(request):
     return redirect('/login/')
 
   else:
-    return render(request, 'tradefood/register.html')
+    return render(request, 'tradefood/auth/register.html')
 
 def login_view(request):
   if request.method == 'POST':
@@ -47,23 +50,33 @@ def login_view(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
       login(request, user)
-      return redirect('/offers/')
+      return redirect('/')
     else:
-      return render(request, 'tradefood/login.html', {'error': 'Invalid login'})
+      return render(request, 'tradefood/auth/login.html', {'error_message': 'Invalid login'})
 
   else:
-    return render(request, 'tradefood/login.html')
+    return render(request, 'tradefood/auth/login.html')
 
-def root_redirect(request):
-  return redirect('/offers/')
+def logout_view(request):
+  logout(request)
+  return redirect('/')
+
+def home(request):
+  return render(request, 'tradefood/home.html')
 
 @login_required(login_url='/login/')
 def open_offers(request):
-  # u = User.objects.get(username=request.user)
-  # merch = Merchant.objects.get(user=u)
+  u = User.objects.get(username=request.user)
+  merch = Merchant.objects.get(user=u)
   # offers = Offer.objects.exclude(expiry__lte=now())
 
-  offers = Offer.objects.filter(expiry__gt=now(), available=True)
+  offers = Offer.objects.filter(
+    expiry__gt=now(),
+    available=True
+  ).exclude(
+    merchant=merch
+  )
+
   return render(request, 'tradefood/offers/offers.html', {'offers': offers})
 
 @login_required(login_url='/login/')
@@ -74,12 +87,21 @@ def offer_details(request, offer_pk):
 
     offer = Offer.objects.get(pk=offer_pk)
 
-    if offer.merchant != merch:
-      bids = 'NA'
-    else:
-      bids = offer.bids.filter(expiry__gt=now())
+    try: 
+      winning_bid = offer.bids.get(accepted=True)
+    except ObjectDoesNotExist:
+      winning_bid = None
 
-    return render(request, 'tradefood/offers/offer.html', {'offer': offer, 'bids': bids})
+    payload = {'offer': offer, 'winning_bid': winning_bid}
+
+    if offer.merchant == merch:
+      bids = offer.bids.filter(expiry__gt=now())
+      payload['bids'] = bids
+      payload['offer_owner'] = True
+    else:
+      payload['offer_owner'] = False
+
+    return render(request, 'tradefood/offers/offer.html', payload)
 
 @login_required(login_url='/login/')
 def submit_offer(request):
@@ -102,10 +124,10 @@ def submit_offer(request):
         expiry=offer_expiry,
       )
 
-      return redirect('/offers/')
+      return redirect('/my-offers/')
   else:
     form = OfferForm()
-  return render(request, 'tradefood/trade.html', {'form': form})
+  return render(request, 'tradefood/offers/trade.html', {'form': form})
 
 @login_required(login_url='/login/')
 def submit_bid(request, offer_pk):
@@ -113,10 +135,13 @@ def submit_bid(request, offer_pk):
     form = BidForm(request.POST)
     if form.is_valid():
       u = User.objects.get(username=request.user)
-      # should check here that merch placing a bid is the same that made the original offer
+      # should check here that merch placing a bid is not the same that made the original offer
       merch = Merchant.objects.get(user=u)
 
       this_offer = Offer.objects.get(pk=offer_pk)
+
+      if this_offer.merchant == merch:
+        return render(request, 'tradefood/offer.html', {'error_message': 'Cannot bid on your own order.'})
 
       form_data = form.cleaned_data
       bid_expiry = now() + timedelta(form_data['duration']/24.0)
@@ -132,14 +157,14 @@ def submit_bid(request, offer_pk):
         expiry=bid_expiry,
       )
 
-      return redirect('/offers/')
+      return redirect('/my-bids/')
   else:
     this_offer = Offer.objects.get(pk=offer_pk)
     form = BidForm()
 
     return render(
       request,
-      'tradefood/place_bid.html',
+      'tradefood/bids/place_bid.html',
       {
        'form': form,
        'offer_pk': offer_pk,
@@ -156,18 +181,32 @@ def my_bids(request):
   merch = Merchant.objects.get(user=u)
 
   # get bids from today
-  bids = merch.bids.filter(date_posted__date=now().date())
+  bids = merch.bids.filter(
+    date_posted__date=now().date()
+  ).order_by(
+    '-date_posted'
+  )
+
+  # e = [is_alive(bid) for bid in bids]
 
   return render(request, 'tradefood/bids/my_bids.html', {'bids': bids})
+  # return render(request, 'tradefood/bids/my_bids.html', {'bid_data': zip(e, bids)})
 
 @login_required(login_url='/login/')
 def my_offers(request):
   u = User.objects.get(username=request.user)
   merch = Merchant.objects.get(user=u)
 
-  offers = merch.offers.filter(expiry__gt=now())
+  offers = merch.offers.filter(
+    # date_posted__date=now().date(),
+    is_alive()=True
+  ).order_by(
+    '-date_posted'
+  )
 
-  return render(request, 'tradefood/my_offers.html', {'offers': offers})
+  # e = [is_alive(offer) for offer in offers]
+
+  return render(request, 'tradefood/offers/my_offers.html', {'offers': offers})
 
 @login_required(login_url='/login/')
 def bid_details(request, bid_pk):
@@ -196,6 +235,7 @@ def accept_bid(request, bid_pk):
       return render(request, 'tradefood/forbidden.html')
 
     offer.available = False
+    offer.bid_accepted = True
     offer.save()
 
     bid.accepted = True
@@ -203,7 +243,7 @@ def accept_bid(request, bid_pk):
 
     return render(
       request,
-      'tradefood/bid_accepted.html',
+      'tradefood/bids/bid_accepted.html',
       {
         'offer_desc': offer.description,
         'bid_desc': bid.description,

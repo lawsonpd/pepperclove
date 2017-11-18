@@ -1,0 +1,21 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+  <h1>2for2</h1>
+
+  <h2>Time to get that trade on!</h2>
+
+{% else %}
+
+  <h1>2for2</h1>
+
+  <h2>where restaurants go to trade food!</h2>
+
+  <p class="lead">Go ahead and <a href="/login">log in</a> or <a href="/register/">register</a> to start trading.</p>
+
+{% endif %}
+
+{% endblock %}

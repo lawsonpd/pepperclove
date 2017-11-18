@@ -1,10 +1,19 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
 <h1>Available offers</h1>
   {% for offer in offers %}
-    <div class="offer">
-      <p>{{ offer.description }}</p>
-      <p>{{ offer.merchant.name }}</p>
-      <a href="/offers/{{ offer.pk }}/">Details</a>
+    <div class="offer panel panel-default">
+      <div class="panel-body">
+        <p>{{ offer.description }}</p>
+        <p>{{ offer.merchant.name }}</p>
+        <!-- <a href="/offers/{{ offer.pk }}/">Details</a> -->
+        <a href="/bid/{{ offer.pk }}/">Place a bid</a>
+      </div>
     </div>
   {% empty %}
     <h2>No open offers currently.</h2>
   {% endfor %}
+
+{% endblock %}

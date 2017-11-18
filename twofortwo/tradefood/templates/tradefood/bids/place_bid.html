@@ -1,9 +1,15 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
 <h1>Place a bid for</h1>
-<h2>{{ description }}</h2>
-<h3>from {{ merchant }}</h3>
+<h2 class="text-info">{{ description }}</h2>
+<h3 class="text-info">from {{ merchant }}</h3>
 
 <form method="post" action="/bid/{{ offer_pk }}/">
   {% csrf_token %}
   {{ form.as_p }}
   <input type="submit" value="Submit" />
 </form>
+
+{% endblock %}

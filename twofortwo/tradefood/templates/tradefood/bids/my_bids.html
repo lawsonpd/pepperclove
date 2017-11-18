@@ -1,12 +1,24 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
 <h1>My bids</h1>
   {% for bid in bids %}
-    <div class="bid">
-      <p>{{ bid.description }}</p>
-      {% if bid.accepted %}
-        <p><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
-      {% endif %}
-      <a href="/bids/{{ bid.pk }}/">Details</a>
+    <div class="bid panel panel-default">
+      <div class="panel-body">
+        <p class="lead">{{ bid.description }} for {{ bid.offer.description }} from {{ bid.offer.merchant.name }}</p>
+        {% if bid.accepted %}
+          <p class="lead"><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
+        {% endif %}
+        <a href="/bids/{{ bid.pk }}/">Details</a>
+      </div>
     </div>
   {% empty %}
     <h2>You have no open bids.</h2>
   {% endfor %}
+
+  {% for e, bid in bid_data %}
+    <p>{{ bid.description }} - {{ e }}</p>
+  {% endfor %}
+
+  {% endblock %}

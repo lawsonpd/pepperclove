@@ -1,0 +1,64 @@
+{% load bootstrap3 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="padding-top: 50px; padding-bottom: 20px;">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">2for2</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        {% if user.is_authenticated %}
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/trade/">Post a trade</a></li>
+            <li><a href="/offers/">Open offers</a></li>
+            <li><a href="/my-offers/">My offers</a></li>
+            <li><a href="/my-bids/">My bids</a></li>
+            <li style="color: #9d9d9d;">{{ user.merchant.name }}</li>
+            <li><a href="/logout/">Log out</a></li>
+          </ul>
+        {% else %}
+          {% block navbar_right %}
+          <form class="navbar-form navbar-right" method="post" action="/login/">
+            {% csrf_token %}  
+            <div class="form-group">
+              <input type="text" name="username" placeholder="Username" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+          {% endblock %}
+        {% endif %}
+      </div><!--/.navbar-collapse -->
+    </div>
+  </nav>
+
+  <div class="jumbotron">
+    <div class="container">
+      {% block error %}
+        <p class="lead text-warning">{{ error_message }}</p>
+      {% endblock %}
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+</body>
+</html>

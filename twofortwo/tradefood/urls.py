@@ -6,7 +6,8 @@ urlpatterns = [
   # extend '/offers/'
   url(r'^register/$', views.register),
   url(r'^login/$', views.login_view),
-  url(r'^$', views.root_redirect),
+  url(r'^logout/$', views.logout_view),
+  url(r'^$', views.home),
   url(r'^offers/$', views.open_offers),
   url(r'^offers/(?P<offer_pk>\d+)/$', views.offer_details),
   url(r'^bid/(?P<offer_pk>\d+)/$', views.submit_bid),

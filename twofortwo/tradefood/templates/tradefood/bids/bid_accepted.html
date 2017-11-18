@@ -1,3 +1,7 @@
+{% extends "tradefood/base.html" %}
+
+{% block content %}
+
 <h1>Awesome!</h1>
 
 <h2>You accepted a bid from {{ bidding_merchant }} to trade {{ bid_desc }} for {{ offer_desc}}!</h2>
@@ -7,3 +11,5 @@
   <li>{{ bid_contact_name }}</li>
   <li>{{ bid_contact_phone }}</li>
 </ul>
+
+{% endblock %}
