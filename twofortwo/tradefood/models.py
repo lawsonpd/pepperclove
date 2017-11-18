@@ -66,11 +66,11 @@ class Offer(models.Model):
   def is_alive(self):
     time_now = now()
     expiry = self.date_posted + timedelta(self.duration/24.0)
-    return expiry > time_now
+    return expiry > time_now and self.available
 
   def is_alive2(self):
     time_now = now()
-    return self.expiry > time_now
+    return self.expiry > time_now and self.available
 
 
 
@@ -105,8 +105,8 @@ class Bid(models.Model):
   def is_alive(self):
     time_now = now()
     expiry = self.date_posted + timedelta(self.duration/24.0)
-    return expiry > time_now
+    return expiry > time_now and not self.accepted
 
   def is_alive2(self):
     time_now = now()
-    return self.expiry > time_now
+    return self.expiry > time_now and not self.accepted

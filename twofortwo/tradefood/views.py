@@ -112,7 +112,8 @@ def submit_offer(request):
       merch = Merchant.objects.get(user=u)
 
       form_data = form.cleaned_data
-      offer_expiry = now() + timedelta(form_data['duration']/24.0)
+      time_post = now()
+      offer_expiry = time_post + timedelta(form_data['duration']/24.0)
 
       offer = Offer.objects.create(
         description=form_data['description'],
@@ -120,6 +121,7 @@ def submit_offer(request):
         retail_value=form_data['retail_value'],
         contact_name=form_data['contact_name'],
         contact_phone=form_data['contact_phone'],
+        date_posted=time_post,
         duration=form_data['duration'],
         expiry=offer_expiry,
       )
@@ -135,7 +137,6 @@ def submit_bid(request, offer_pk):
     form = BidForm(request.POST)
     if form.is_valid():
       u = User.objects.get(username=request.user)
-      # should check here that merch placing a bid is not the same that made the original offer
       merch = Merchant.objects.get(user=u)
 
       this_offer = Offer.objects.get(pk=offer_pk)
@@ -144,7 +145,8 @@ def submit_bid(request, offer_pk):
         return render(request, 'tradefood/offer.html', {'error_message': 'Cannot bid on your own order.'})
 
       form_data = form.cleaned_data
-      bid_expiry = now() + timedelta(form_data['duration']/24.0)
+      time_post = now()
+      bid_expiry = time_post + timedelta(form_data['duration']/24.0)
 
       bid = Bid.objects.create(
         description=form_data['description'],
@@ -153,6 +155,7 @@ def submit_bid(request, offer_pk):
         retail_value=form_data['retail_value'],
         contact_name=form_data['contact_name'],
         contact_phone=form_data['contact_phone'],
+        date_posted=time_post,
         duration=form_data['duration'],
         expiry=bid_expiry,
       )
@@ -188,9 +191,10 @@ def my_bids(request):
   )
 
   # e = [is_alive(bid) for bid in bids]
+  alive_bids = [bid for bid in bids if bid.is_alive()]
 
-  return render(request, 'tradefood/bids/my_bids.html', {'bids': bids})
-  # return render(request, 'tradefood/bids/my_bids.html', {'bid_data': zip(e, bids)})
+  # return render(request, 'tradefood/bids/my_bids.html', {'bid_data': zip(bids, e)})
+  return render(request, 'tradefood/bids/my_bids.html', {'bids': alive_bids})
 
 @login_required(login_url='/login/')
 def my_offers(request):
@@ -198,15 +202,16 @@ def my_offers(request):
   merch = Merchant.objects.get(user=u)
 
   offers = merch.offers.filter(
-    # date_posted__date=now().date(),
-    is_alive()=True
+    date_posted__date=now().date(),
   ).order_by(
     '-date_posted'
   )
 
   # e = [is_alive(offer) for offer in offers]
+  alive_offers = [offer for offer in offers if offer.is_alive()]
 
-  return render(request, 'tradefood/offers/my_offers.html', {'offers': offers})
+  # return render(request, 'tradefood/bids/my_offers.html', {'offer_data': zip(offers, e)})
+  return render(request, 'tradefood/offers/my_offers.html', {'offers': alive_offers})
 
 @login_required(login_url='/login/')
 def bid_details(request, bid_pk):
