@@ -14,6 +14,9 @@ class BidForm(ModelForm):
     fields = ['description', 'retail_value', 'contact_name', 'contact_phone', 'duration']
     localized_fields = ('retail_value',)
 
+class BidFormCustom(forms.Form):
+  pass
+
 class MerchantForm(ModelForm):
   class Meta:
     model = Merchant
