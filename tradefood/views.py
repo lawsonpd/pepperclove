@@ -55,6 +55,7 @@ def temp_register_unavailable(request):
         email=subscriber_info['email']
       )
 
+      # What if they don't enter a name? (Is is required by default?)
       return render(request, 'tradefood/auth/email_signup_success.html', {'name': subscriber_info['name']})
   else:
     form = EmailSignupForm()
