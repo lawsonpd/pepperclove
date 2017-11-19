@@ -150,3 +150,19 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 # AUTH_USER_MODEL = 'tradefood.User'
+
+ADMINS = [
+    ('Peter', 'lawsonpd@gmail.com'),
+]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        }
+    }
+}
