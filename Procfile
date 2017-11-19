@@ -1,1 +1,1 @@
-web: gunicorn twofortwo.wsgi --log-file -
+web: gunicorn twofortwo.wsgi.application --log-file -
