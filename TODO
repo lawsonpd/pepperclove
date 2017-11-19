@@ -19,6 +19,8 @@ RESOLVED 8. Do we even need to store the duration on the model? Can't we just as
 
 10. Error handling (500, 404, etc.)
 
+** 11. Feedback handling
+
 
 TEST:
 - 
