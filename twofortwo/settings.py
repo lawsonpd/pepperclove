@@ -23,9 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!jf_xrx8jumel9-hu1dh&9w476xwhn)k^tuep405%k)13z)f5@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     'pepperclove.herokuapp.com',
     'pepperclove.club',
     'www.pepperclove.club',

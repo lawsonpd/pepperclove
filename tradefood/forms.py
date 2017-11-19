@@ -43,6 +43,10 @@ class BidFormCustom(forms.Form):
     choices=DURATION_CHOICES,
   )
 
+class EmailSignupForm(forms.Form):
+  name = forms.CharField(max_length=50)
+  email = forms.EmailField(max_length=50)
+
 class MerchantForm(forms.ModelForm):
   class Meta:
     model = Merchant

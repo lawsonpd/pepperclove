@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 
+class EmailSubscriber(models.Model):
+  name = models.CharField(max_length=50)
+  email = models.EmailField(max_length=50)
+
 class Merchant(models.Model):
   user = models.OneToOneField(
     User,

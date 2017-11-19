@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -12,12 +12,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from tradefood.forms import OfferFormCustom, BidFormCustom
-from tradefood.models import Merchant, Offer, Bid
+from tradefood.forms import OfferFormCustom, BidFormCustom, EmailSignupForm
+from tradefood.models import Merchant, Offer, Bid, EmailSubscriber
 from tradefood.utilities import is_alive
 
 # Create your views here.
 
+@require_http_methods(['GET'])
 def register(request):
   if request.method == 'POST':
     form_data = request.POST
@@ -42,6 +43,22 @@ def register(request):
 
   else:
     return render(request, 'tradefood/auth/register.html')
+
+@require_http_methods(['GET', 'POST'])
+def temp_register_unavailable(request):
+  if request.method == 'POST':
+    form = EmailSignupForm(request.POST)
+    if form.is_valid():
+      subscriber_info = form.cleaned_data
+      subscriber = EmailSubscriber.objects.create(
+        name=subscriber_info['name'],
+        email=subscriber_info['email']
+      )
+
+      return render(request, 'tradefood/auth/email_signup_success.html', {'name': subscriber_info['name']})
+  else:
+    form = EmailSignupForm()
+    return render(request, 'tradefood/auth/register_unavailable.html', {'form': form})
 
 def login_view(request):
   if request.method == 'POST':

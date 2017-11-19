@@ -1,0 +1,21 @@
+{% extends 'tradefood/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+
+<h1>We're sorry!</h1>
+
+<h2><em>Registration is temporarily unavailable</em></h2>
+
+<p class="text-info">Check back in a few weeks or enter your name & email address below and we'll send you an update when registration is open!</p>
+
+<form method="post" action="/register/">
+  {% csrf_token %}
+  {{ form }}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  {% endbuttons %}
+</form>
+
+{% endblock %}
