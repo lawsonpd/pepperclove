@@ -27,6 +27,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     'pepperclove.herokuapp.com',
+    'pepperclove.club',
 ]
 
 

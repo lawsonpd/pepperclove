@@ -17,6 +17,8 @@ RESOLVED 8. Do we even need to store the duration on the model? Can't we just as
 
 9. When user submits offer or bid, check that they haven't made the same offer/bid the same day.
 
+10. Error handling (500, 404, etc.)
+
 
 TEST:
 - 
