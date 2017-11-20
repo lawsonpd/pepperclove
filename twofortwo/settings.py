@@ -15,7 +15,7 @@ import os
 import raven
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -186,5 +186,6 @@ RAVEN_CONFIG = {
     'dsn': 'https://a886e6dea3914bf8a003326e120f690b:11ec7b41fcc64521b01ac9c5980601ae@sentry.io/248118',
     # If you are using git, you can also automatically configure the
     # release based on the git info.
-    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+    # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+    'release': raven.fetch_git_sha(os.path.abspath(os.curdir)),
 }
