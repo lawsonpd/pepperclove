@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
+from django.http import HttpResponse
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -17,6 +18,10 @@ from tradefood.models import Merchant, Offer, Bid, EmailSubscriber
 from tradefood.utilities import is_alive
 
 # Create your views here.
+
+@require_http_methods(['GET'])
+def lets_encrypt(request):
+  return HttpResponse('Q4uR9oYEZ4l4jFjqhEa_mk6nUkNvtWf2iajClq13GOs.LmpInhVWEg6vB1yJk-b8Bd8-yc7wkfxPeiMJwAVbZcQ')
 
 @require_http_methods(['GET'])
 def register(request):
