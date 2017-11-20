@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+import raven
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tradefood.apps.TradefoodConfig',
     'bootstrap3',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -173,4 +176,15 @@ BOOTSTRAP3 = {
     'jquery_url': 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js',
     'include_jquery': True,
     'javascript_in_head': True,
+}
+
+SERVER_EMAIL = 'errors@pepperclove.club'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # the default
+
+RAVEN_CONFIG = {
+    'dsn': 'https://a886e6dea3914bf8a003326e120f690b:11ec7b41fcc64521b01ac9c5980601ae@sentry.io/248118',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
