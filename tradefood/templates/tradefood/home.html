@@ -18,10 +18,36 @@
 
     <h2>where restaurants go to trade food!</h2>
 
-    <p class="lead">Go ahead and <a href="/login">log in</a> or <a href="/register/">register</a> to start trading.</p>
+    <p class="lead"><a href="/login">Log in</a> or <a href="/register/">register</a> to start trading.</p>
 
   {% endif %}
 
 </div>
+
+{% endblock %}
+
+{% block info %}
+
+  {% if not user.is_authenticated %}
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Enjoy more local food</h2>
+        <p>There are so many restaurants around you! Trade with them and get some good food you've never had.</p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <h2>Engage with your neighbors</h2>
+        <p>Get to know the restaurants around you! The barter economy really brings neighbors together.</p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+     </div>
+      <div class="col-md-4">
+        <h2>Broaden your horizons</h2>
+        <p>Food.</p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div>
+    </div>
+  {% else %}
+
+  {% endif %}
 
 {% endblock %}

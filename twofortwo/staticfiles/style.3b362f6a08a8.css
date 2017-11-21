@@ -2,7 +2,6 @@
 body {
   padding-top: 50px;
   padding-bottom: 20px;
-  font-family: 'Open Sans', sans-serif;
 }
 
 /*.TODO {
@@ -10,19 +9,6 @@ body {
   font-family: 'Pacifico', cursive;
 }*/
 
-h1 {
-  font-family: 'Pacifico', cursive;
-  margin-bottom: 50px;
-}
-
-.nav-theme {
-  background-color: #3C8D2F;
-}
-
-nav a {
-  color: white;
-}
-
-.jumbotron {
-  margin-top: 40px;
+.navbar {
+  color: #A6373F;
 }

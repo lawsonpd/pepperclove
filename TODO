@@ -29,6 +29,8 @@ RESOLVED 8. Do we even need to store the duration on the model? Can't we just as
 
 ** 15. Show two or three most recent orders on the home page.
 
+16. SSL? https://letsencrypt.org/getting-started/, https://medium.com/@franxyzxyz/setting-up-free-https-with-heroku-ssl-and-lets-encrypt-80cf6eac108e
+
 
 TEST:
 - 

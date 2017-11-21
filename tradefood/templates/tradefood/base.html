@@ -4,6 +4,8 @@
 
   {% load bootstrap3 %}
 
+  {% load static %}
+
   {% bootstrap_css %}
 
   <meta charset="utf-8">
@@ -12,27 +14,15 @@
   <title>Pepperclove</title>
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Pacifico" rel="stylesheet">
+  <link href="{% static 'style.css' %}" rel="stylesheet">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <style>
-    h1 {
-      font-family: 'Pacifico', cursive;
-      margin-bottom: 50px;
-    }
-    body {
-      font-family: 'Open Sans', sans-serif;
-    }
-    .jumbotron {
-      margin-top: 40px;
-    }
-  </style>
 
   {% block custom_css %}{% endblock %}
 </head>
 
 <body style="padding-top: 50px; padding-bottom: 20px;">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar-inverse navbar-fixed-top nav-theme" id="bootstrap-overrides">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -50,7 +40,7 @@
             <li><a href="/offers/">Open offers</a></li>
             <li><a href="/my-offers/">My offers</a></li>
             <li><a href="/my-bids/">My bids</a></li>
-            <li style="color: #9d9d9d;">{{ user.merchant.name }}</li>
+            <li>{{ user.merchant.name }}</li>
             <li><a href="/logout/">Log out</a></li>
           </ul>
         {% else %}
@@ -74,11 +64,22 @@
   <div class="container">
     <div class="jumbotron">
       {% block error %}
-        <p class="lead text-warning">{{ error_message }}</p>
+        <p class="lead text-warning-custom">{{ error_message }}</p>
       {% endblock %}
       {% block content %}{% endblock %}
     </div>
   </div>
+
+
+  <div class="container">
+    {% block info %}{% endblock %}  
+
+    <hr>
+
+    <footer>
+      <p>&copy; 2017 Pepperclove</p>
+    </footer>
+  </div> <!-- /container -->
 
   {% bootstrap_javascript %}
 </body>

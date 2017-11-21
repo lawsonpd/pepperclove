@@ -22,10 +22,10 @@ DURATION_CHOICES = (
 )
 
 class OfferFormCustom(forms.Form):
-  description = forms.CharField(label="Description", max_length=100)
-  retail_value = forms.FloatField(label="Retail value", required=False, localize=True)
-  contact_name = forms.CharField(label="Contact name")
-  contact_phone = forms.CharField(label="Contact phone")
+  description = forms.CharField(max_length=100)
+  retail_value = forms.FloatField(required=False, localize=True)
+  contact_name = forms.CharField()
+  contact_phone = forms.CharField()
   duration = forms.ChoiceField(
     label="Expires in",
     widget=forms.Select,
