@@ -9,6 +9,8 @@ should 'my offers' and 'my bids' be routed at '/offers/<merchant>/' & '/bids/<me
 
 somehow need to get the no. of bids for an offer to show on the main offers page.
 
+should restaurants be able to set a radius for who can bid on their orders?
+
 
 
 checkout:

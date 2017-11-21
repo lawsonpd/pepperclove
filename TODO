@@ -25,6 +25,10 @@ RESOLVED 8. Do we even need to store the duration on the model? Can't we just as
 
 13. SMS notifications
 
+14. What's the best way to handle registration (so that only local restaurants can signup)?
+
+** 15. Show two or three most recent orders on the home page.
+
 
 TEST:
 - 

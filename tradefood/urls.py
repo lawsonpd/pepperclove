@@ -4,8 +4,8 @@ from . import views
 
 urlpatterns = [
   # extend '/offers/'
-  # url(r'^register/$', views.register),
-  url(r'^register/$', views.temp_register_unavailable),
+  url(r'^register/$', views.register),
+  # url(r'^register/$', views.temp_register_unavailable),
   url(r'^login/$', views.login_view),
   url(r'^logout/$', views.logout_view),
   url(r'^$', views.home),
