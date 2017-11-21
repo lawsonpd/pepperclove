@@ -23,31 +23,33 @@ from tradefood.utilities import is_alive
 def lets_encrypt(request):
   return HttpResponse('Q4uR9oYEZ4l4jFjqhEa_mk6nUkNvtWf2iajClq13GOs.LmpInhVWEg6vB1yJk-b8Bd8-yc7wkfxPeiMJwAVbZcQ')
 
-@require_http_methods(['GET', 'POST'])
-def register(request):
-  if request.method == 'POST':
-    form_data = request.POST
+# Registration temp. unavailable until ready to really launch.
+#
+# @require_http_methods(['GET', 'POST'])
+# def register(request):
+#   if request.method == 'POST':
+#     form_data = request.POST
 
-    # need to validate data before creating
-    new_user = User.objects.create_user(
-      form_data['username'],
-      password=form_data['password'],
-    )
+#     # need to validate data before creating
+#     new_user = User.objects.create_user(
+#       form_data['username'],
+#       password=form_data['password'],
+#     )
 
-    new_merchant = Merchant.objects.create(
-      user=new_user,
-      name=form_data['name'],
-      email=form_data['email'],
-      phone=form_data['phone'],
-      street_address=form_data['address'],
-      zip_code=form_data['zipcode'],
-      category=form_data['category'],
-    )
+#     new_merchant = Merchant.objects.create(
+#       user=new_user,
+#       name=form_data['name'],
+#       email=form_data['email'],
+#       phone=form_data['phone'],
+#       street_address=form_data['address'],
+#       zip_code=form_data['zipcode'],
+#       category=form_data['category'],
+#     )
 
-    return redirect('/login/')
+#     return redirect('/login/')
 
-  else:
-    return render(request, 'tradefood/auth/register.html')
+#   else:
+#     return render(request, 'tradefood/auth/register.html')
 
 @require_http_methods(['GET', 'POST'])
 def temp_register_unavailable(request):
