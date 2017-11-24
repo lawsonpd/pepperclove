@@ -97,7 +97,7 @@ def open_offers(request):
 
   offers = Offer.objects.filter(
     expiry__gt=now(),
-    available=True
+    bid_accepted=False
   ).exclude(
     merchant=merch
   )
@@ -267,7 +267,6 @@ def accept_bid(request, bid_pk):
     if offer.merchant != merch:
       return render(request, 'tradefood/forbidden.html')
 
-    offer.available = False
     offer.bid_accepted = True
     offer.save()
 

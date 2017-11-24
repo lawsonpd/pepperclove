@@ -47,13 +47,11 @@ class Offer(models.Model):
   contact_phone = models.CharField(max_length=16)
   date_posted = models.DateTimeField()
   expiry = models.DateTimeField()
-  # available is False when bid has been accepted for offer
-  available = models.BooleanField(default=True)
   bid_accepted = models.BooleanField(default=False)
 
   def is_alive(self):
     time_now = now()
-    return self.expiry > time_now and self.available
+    return self.expiry > time_now and not self.bid_accepted
 
 
 

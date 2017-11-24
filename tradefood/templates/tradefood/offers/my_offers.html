@@ -9,7 +9,7 @@
         <div class="offer panel panel-default">
           <div class="panel-body">
             <h2>{{ offer.description }}
-              {% if offer.available %}
+              {% if offer.is_alive %}
                 {% if offer.bids.count > 0 %}
                   <span class="badge">{{ offer.bids.count }}</span>
                 {% endif %}</h2>
