@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<h1>{{ offer.description }}</h1>
-{% if not offer.bid_accepted and not offer.is_alive %}
-  <span class="badge">Expired</span>
-{% endif %}
+<h1>
+  {{ offer.description }}
+  {% if not offer.bid_accepted and not offer.is_alive %}
+    <span class="badge badge-text">Expired</span>
+  {% endif %}
+</h1>
 
 {% if not offer_owner %}
   <h2>from {{ offer.merchant.name }}</h2>

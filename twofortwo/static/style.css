@@ -16,6 +16,10 @@ h1 {
   margin-bottom: 50px;
 }
 
+h1 .badge-text {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .nav-theme {
   background-color: #1B8147;
 }

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
 
@@ -237,7 +237,7 @@ def offer_details(request, offer_pk):
     u = User.objects.get(username=request.user)
     merch = Merchant.objects.get(user=u)
 
-    this_offer = Offer.objects.get(pk=offer_pk)
+    this_offer = get_object_or_404(Offer, pk=offer_pk)
     try:
       existing_bid = Bid.objects.get(
         offer=this_offer,
