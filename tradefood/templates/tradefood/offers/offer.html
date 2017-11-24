@@ -18,15 +18,23 @@
   {% else %}
     {% for bid in bids %}
       <h3>Bids:</h3>
-      <p class="lead"><a href="/bids/{{ bid.pk}}/">{{ bid.description }}</a></p>
+      <p class="lead">
+        <a href="/bids/{{ bid.pk}}/">{{ bid.description }}</a>
+        {% if not bid.is_alive %}
+          <span class="badge">Expired</span>
+        {% endif %}
+      </p>
     {% empty %}
       <p>No bids.</p>
     {% endfor %}
   {% endif %}
-{% endif %}
-
-{% if not offer_owner %}
-  <a href="/bid/{{ offer.pk }}/">Place a bid</a>
+{% else %}
+  {% if existing_bid %}
+    {# probably want a link to the bid here #}
+    <p class="text-warning">You've already bid on this offer.</p>
+  {% else %}
+    <a href="/bid/{{ offer.pk }}/">Place a bid</a>
+  {% endif %}
 {% endif %}
 
 {% endblock %}

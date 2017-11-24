@@ -6,7 +6,12 @@
   {% for bid in bids %}
     <div class="bid panel panel-default">
       <div class="panel-body">
-        <p class="lead">{{ bid.description }} for {{ bid.offer.description }} from {{ bid.offer.merchant.name }}</p>
+        <p class="lead">
+          {{ bid.description }} for {{ bid.offer.description }} from {{ bid.offer.merchant.name }}
+          {% if not bid.is_alive %}
+            <span class="badge">Expired</span>
+          {% endif %}
+        </p>
         {% if bid.accepted %}
           <p class="lead"><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
         {% endif %}

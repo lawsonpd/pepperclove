@@ -31,6 +31,12 @@ RESOLVED 8. Do we even need to store the duration on the model? Can't we just as
 
 16. SSL? https://letsencrypt.org/getting-started/, https://medium.com/@franxyzxyz/setting-up-free-https-with-heroku-ssl-and-lets-encrypt-80cf6eac108e
 
+17. Currently, the offer details template only shows bids that are not expired. It should probably show all the bids and annotate the statuses thereof.
+
+** 18. There isn't a good reason to go to '/offers' after '/my-offers'. The '/my-offers' page should have the bids listed for each offer and the 'details' link should be replaced by direct links to each bid. (Same for my-bids.)
+
+** 19. Make sure post requests can't be made for bid/offer submission that aren't allowed (* even if the template logic blocks such submissions).
+
 
 TEST:
 - 

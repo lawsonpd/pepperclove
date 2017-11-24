@@ -25,31 +25,31 @@ def lets_encrypt(request):
 
 # Registration temp. unavailable until ready to really launch.
 #
-# @require_http_methods(['GET', 'POST'])
-# def register(request):
-#   if request.method == 'POST':
-#     form_data = request.POST
+@require_http_methods(['GET', 'POST'])
+def register(request):
+  if request.method == 'POST':
+    form_data = request.POST
 
-#     # need to validate data before creating
-#     new_user = User.objects.create_user(
-#       form_data['username'],
-#       password=form_data['password'],
-#     )
+    # need to validate data before creating
+    new_user = User.objects.create_user(
+      form_data['username'],
+      password=form_data['password'],
+    )
 
-#     new_merchant = Merchant.objects.create(
-#       user=new_user,
-#       name=form_data['name'],
-#       email=form_data['email'],
-#       phone=form_data['phone'],
-#       street_address=form_data['address'],
-#       zip_code=form_data['zipcode'],
-#       category=form_data['category'],
-#     )
+    new_merchant = Merchant.objects.create(
+      user=new_user,
+      name=form_data['name'],
+      email=form_data['email'],
+      phone=form_data['phone'],
+      street_address=form_data['address'],
+      zip_code=form_data['zipcode'],
+      category=form_data['category'],
+    )
 
-#     return redirect('/login/')
+    return redirect('/login/')
 
-#   else:
-#     return render(request, 'tradefood/auth/register.html')
+  else:
+    return render(request, 'tradefood/auth/register.html')
 
 @require_http_methods(['GET', 'POST'])
 def temp_register_unavailable(request):
@@ -105,60 +105,6 @@ def open_offers(request):
   return render(request, 'tradefood/offers/offers.html', {'offers': offers})
 
 @login_required(login_url='/login/')
-def offer_details(request, offer_pk):
-  if request.method == 'GET':
-    u = User.objects.get(username=request.user)
-    merch = Merchant.objects.get(user=u)
-
-    offer = Offer.objects.get(pk=offer_pk)
-
-    try: 
-      winning_bid = offer.bids.get(accepted=True)
-    except ObjectDoesNotExist:
-      winning_bid = None
-
-    payload = {'offer': offer, 'winning_bid': winning_bid}
-
-    if offer.merchant == merch:
-      bids = offer.bids.filter(expiry__gt=now())
-      payload['bids'] = bids
-      payload['offer_owner'] = True
-    else:
-      payload['offer_owner'] = False
-
-    return render(request, 'tradefood/offers/offer.html', payload)
-
-@login_required(login_url='/login/')
-def submit_offer(request):
-  if request.method == 'POST':
-    form = OfferFormCustom(request.POST)
-    if form.is_valid():
-      u = User.objects.get(username=request.user)
-      merch = Merchant.objects.get(user=u)
-
-      form_data = form.cleaned_data
-      time_post = now()
-      duration = timedelta(float(form_data['duration'])/24.0)
-      offer_expiry = time_post + duration
-
-      rv = form_data['retail_value'] or None
-
-      offer = Offer.objects.create(
-        description=form_data['description'],
-        merchant=merch,
-        retail_value=rv,
-        contact_name=form_data['contact_name'],
-        contact_phone=form_data['contact_phone'],
-        date_posted=time_post,
-        expiry=offer_expiry,
-      )
-
-      return redirect('/my-offers/')
-  else:
-    form = OfferFormCustom()
-  return render(request, 'tradefood/offers/trade.html', {'form': form})
-
-@login_required(login_url='/login/')
 def submit_bid(request, offer_pk):
   if request.method == 'POST':
     form = BidFormCustom(request.POST)
@@ -205,6 +151,36 @@ def submit_bid(request, offer_pk):
        # 'num_bids': this_offer.bids.all().count()
       }
     )
+
+@login_required(login_url='/login/')
+def submit_offer(request):
+  if request.method == 'POST':
+    form = OfferFormCustom(request.POST)
+    if form.is_valid():
+      u = User.objects.get(username=request.user)
+      merch = Merchant.objects.get(user=u)
+
+      form_data = form.cleaned_data
+      time_post = now()
+      duration = timedelta(float(form_data['duration'])/24.0)
+      offer_expiry = time_post + duration
+
+      rv = form_data['retail_value'] or None
+
+      offer = Offer.objects.create(
+        description=form_data['description'],
+        merchant=merch,
+        retail_value=rv,
+        contact_name=form_data['contact_name'],
+        contact_phone=form_data['contact_phone'],
+        date_posted=time_post,
+        expiry=offer_expiry,
+      )
+
+      return redirect('/my-offers/')
+  else:
+    form = OfferFormCustom()
+  return render(request, 'tradefood/offers/trade.html', {'form': form})
 
 @login_required(login_url='/login/')
 def my_bids(request):
@@ -256,6 +232,41 @@ def bid_details(request, bid_pk):
     return render(request, 'tradefood/forbidden.html')
 
 @login_required(login_url='/login/')
+def offer_details(request, offer_pk):
+  if request.method == 'GET':
+    u = User.objects.get(username=request.user)
+    merch = Merchant.objects.get(user=u)
+
+    this_offer = Offer.objects.get(pk=offer_pk)
+    try:
+      existing_bid = Bid.objects.get(
+        offer=this_offer,
+        merchant=merch
+      )
+    except ObjectDoesNotExist:
+      existing_bid = None
+
+    try: 
+      winning_bid = this_offer.bids.get(accepted=True)
+    except ObjectDoesNotExist:
+      winning_bid = None
+
+    payload = {
+      'offer': this_offer,
+      'winning_bid': winning_bid,
+      'existing_bid': existing_bid
+    }
+
+    if this_offer.merchant == merch:
+      bids = this_offer.bids.all()
+      payload['bids'] = bids
+      payload['offer_owner'] = True
+    else:
+      payload['offer_owner'] = False
+
+    return render(request, 'tradefood/offers/offer.html', payload)
+
+@login_required(login_url='/login/')
 def accept_bid(request, bid_pk):
   if request.method == 'POST':
     u = User.objects.get(username=request.user)
@@ -266,6 +277,8 @@ def accept_bid(request, bid_pk):
 
     if offer.merchant != merch:
       return render(request, 'tradefood/forbidden.html')
+    if bid_accepted:
+      return redirect('/my-offers/', {error_message: 'Bid already accepted.'})
 
     offer.bid_accepted = True
     offer.save()

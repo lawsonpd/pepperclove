@@ -11,9 +11,13 @@
   <p>Retail value ${{ bid.retail_value }}</p>
 {% endif %}
 
-<form method="post" action="/accept-bid/{{ bid.pk }}/">
-  {% csrf_token %}
-  <input type="submit" value="Accept bid" />
-</form>
+{% if bid.is_alive %}
+  <form method="post" action="/accept-bid/{{ bid.pk }}/">
+    {% csrf_token %}
+    <input type="submit" value="Accept bid" />
+  </form>
+{% else %}
+  <p class="text-warning">This bid has expired.</p>
+{% endif %}
 
 {% endblock %}

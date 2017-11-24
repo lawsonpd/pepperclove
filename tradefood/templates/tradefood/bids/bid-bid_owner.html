@@ -4,11 +4,11 @@
 
 <h2>{{ bid.offer.merchant.name }}'s offer:</h2>
 
-<p class="text-info">{{ bid.offer.description }}</p>
+<p><a href="/offers/{{ bid.offer.pk }}/">{{ bid.offer.description }}</a></p>
 
 <h2>Your bid:</h2>
 
-<p class="text-info">{{ bid.description }}</p>
+<p>{{ bid.description }}</p>
 
 {% if bid.accepted %}
   <h3>Great news: your bid was accepted by {{ bid.offer.merchant.name }}!</h3>
@@ -17,6 +17,10 @@
     <li class="text-info">{{ bid.offer.contact_name }}</li>
     <li class="text-info">{{ bid.offer.contact_phone }}</li>
   </ul>
+{% else %}
+  {% if not bid.is_alive %}
+    <p class="text-warning">Bid expired.</p>
+  {% endif %}
 {% endif %}
 
 {% endblock %}
