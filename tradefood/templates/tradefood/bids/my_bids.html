@@ -9,7 +9,7 @@
         <p class="lead">
           {{ bid.description }} for {{ bid.offer.description }} from {{ bid.offer.merchant.name }}
           {% if not bid.is_alive %}
-            <span class="badge">Expired</span>
+            <span class="badge">Bid expired</span>
           {% endif %}
         </p>
         {% if bid.accepted %}
