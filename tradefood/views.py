@@ -23,6 +23,9 @@ from tradefood.utilities import is_alive
 def lets_encrypt(request):
   return HttpResponse('Q4uR9oYEZ4l4jFjqhEa_mk6nUkNvtWf2iajClq13GOs.LmpInhVWEg6vB1yJk-b8Bd8-yc7wkfxPeiMJwAVbZcQ')
 
+def how_it_works(request):
+  return render(request, 'tradefood/info/how_it_works.html')
+
 # Registration temp. unavailable until ready to really launch.
 #
 @require_http_methods(['GET', 'POST'])
