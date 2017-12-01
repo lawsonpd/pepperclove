@@ -30,53 +30,53 @@ SECRET_KEY = '!jf_xrx8jumel9-hu1dh&9w476xwhn)k^tuep405%k)13z)f5@'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'localhost',
-    'pepperclove.herokuapp.com',
-    'pepperclove.club',
-    'www.pepperclove.club',
+  'localhost',
+  'pepperclove.herokuapp.com',
+  'pepperclove.club',
+  'www.pepperclove.club',
 ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'tradefood.apps.TradefoodConfig',
-    'bootstrap3',
-    'raven.contrib.django.raven_compat',
+  'django.contrib.admin',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  'tradefood.apps.TradefoodConfig',
+  'bootstrap3',
+  'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  'django.middleware.security.SecurityMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.auth.middleware.AuthenticationMiddleware',
+  'django.contrib.messages.middleware.MessageMiddleware',
+  'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'twofortwo.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+  {
+      'BACKEND': 'django.template.backends.django.DjangoTemplates',
+      'DIRS': [],
+      'APP_DIRS': True,
+      'OPTIONS': {
+          'context_processors': [
+              'django.template.context_processors.debug',
+              'django.template.context_processors.request',
+              'django.contrib.auth.context_processors.auth',
+              'django.contrib.messages.context_processors.messages',
+          ],
+      },
+  },
 ]
 
 WSGI_APPLICATION = 'twofortwo.wsgi.application'
@@ -86,14 +86,10 @@ WSGI_APPLICATION = 'twofortwo.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # },
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': os.path.join(BASE_DIR, 'db.postgresql'),
-    },
+  'default': {
+      'ENGINE': 'django.db.backends.postgresql_psycopg2',
+      # 'NAME': os.path.join(BASE_DIR, 'db.postgresql'),
+  },
 }
 
 db_from_env = dj_database_url.config(conn_max_age=500)
@@ -103,18 +99,18 @@ DATABASES['default'].update(db_from_env)
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+  {
+      'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+  },
+  {
+      'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+  },
+  {
+      'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+  },
+  {
+      'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+  },
 ]
 
 
@@ -146,7 +142,7 @@ STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
+  os.path.join(PROJECT_ROOT, 'static'),
 )
 
 # Simplified static file serving.
@@ -158,7 +154,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # AUTH_USER_MODEL = 'tradefood.User'
 
 ADMINS = [
-    ('Peter', 'lawsonpd@gmail.com'),
+  ('Peter', 'lawsonpd@gmail.com'),
 ]
 
 # LOGGING = {
@@ -175,53 +171,53 @@ ADMINS = [
 
 # config from https://docs.sentry.io/clients/python/integrations/django/
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'root': {
-        'level': 'WARNING',
-        'handlers': ['sentry'],
-    },
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s '
-                      '%(process)d %(thread)d %(message)s'
-        },
-    },
-    'handlers': {
-        'sentry': {
-            'level': 'ERROR', # To capture more than ERROR, change to WARNING, INFO, etc.
-            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-            'tags': {'custom-tag': 'x'},
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'raven': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'sentry.errors': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-    },
+  'version': 1,
+  'disable_existing_loggers': True,
+  'root': {
+      'level': 'WARNING',
+      'handlers': ['sentry'],
+  },
+  'formatters': {
+      'verbose': {
+          'format': '%(levelname)s %(asctime)s %(module)s '
+                    '%(process)d %(thread)d %(message)s'
+      },
+  },
+  'handlers': {
+      'sentry': {
+          'level': 'ERROR', # To capture more than ERROR, change to WARNING, INFO, etc.
+          'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+          'tags': {'custom-tag': 'x'},
+      },
+      'console': {
+          'level': 'DEBUG',
+          'class': 'logging.StreamHandler',
+          'formatter': 'verbose'
+      }
+  },
+  'loggers': {
+      'django.db.backends': {
+          'level': 'ERROR',
+          'handlers': ['console'],
+          'propagate': False,
+      },
+      'raven': {
+          'level': 'DEBUG',
+          'handlers': ['console'],
+          'propagate': False,
+      },
+      'sentry.errors': {
+          'level': 'DEBUG',
+          'handlers': ['console'],
+          'propagate': False,
+      },
+  },
 }
 
 BOOTSTRAP3 = {
-    'jquery_url': 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js',
-    'include_jquery': True,
-    'javascript_in_head': True,
+  'jquery_url': 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js',
+  'include_jquery': True,
+  'javascript_in_head': True,
 }
 
 SERVER_EMAIL = 'errors@pepperclove.club'
@@ -229,8 +225,8 @@ SERVER_EMAIL = 'errors@pepperclove.club'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # the default
 
 RAVEN_CONFIG = {
-    'dsn': 'https://a886e6dea3914bf8a003326e120f690b:11ec7b41fcc64521b01ac9c5980601ae@sentry.io/248118',
-    # If you are using git, you can also automatically configure the
-    # release based on the git info.
-    # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+  'dsn': 'https://a886e6dea3914bf8a003326e120f690b:11ec7b41fcc64521b01ac9c5980601ae@sentry.io/248118',
+  # If you are using git, you can also automatically configure the
+  # release based on the git info.
+  # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
