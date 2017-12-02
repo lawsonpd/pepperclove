@@ -35,14 +35,14 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="/how-it-works">How it works</a></li>
+          <li class="{% if request.resolver_match.url_name == 'how-it-works' %}active{% endif %}"><a href="/how-it-works">How it works</a></li>
         </ul>
         {% if user.is_authenticated %}
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/trade/">Post a trade</a></li>
-            <li><a href="/offers/">Open offers</a></li>
-            <li><a href="/my-offers/">My offers</a></li>
-            <li><a href="/my-bids/">My bids</a></li>
+            <li class="{% if request.resolver_match.url_name == 'submit-offer' %}active{% endif %}"><a href="/trade/">Post a trade</a></li>
+            <li class="{% if request.resolver_match.url_name == 'open-offers' %}active{% endif %}"><a href="/offers/">Open offers</a></li>
+            <li class="{% if request.resolver_match.url_name == 'my-offers' %}active{% endif %}"><a href="/my-offers/">My offers</a></li>
+            <li class="{% if request.resolver_match.url_name == 'my-bids' %}active{% endif %}"><a href="/my-bids/">My bids</a></li>
             <li>{{ user.merchant.name }}</li>
             <li><a href="/logout/">Log out</a></li>
           </ul>
