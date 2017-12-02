@@ -10,7 +10,7 @@
 
 <p class="text-info">Check back in a few weeks or enter your name & email address below and we'll send you an update when registration is open!</p>
 
-<form method="post" action="/register/">
+<form method="post" action="{% url 'register' %}">
   {% csrf_token %}
   {{ form }}
   {% buttons %}

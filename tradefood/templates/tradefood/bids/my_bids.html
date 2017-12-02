@@ -17,7 +17,7 @@
           {% if bid.accepted %}
             <p class="lead"><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
           {% endif %}
-          <a href="/bids/{{ bid.pk }}/">Details</a>
+          <a href="{% url 'bids' bid.pk %}">Details</a>
         </div>
       </div>
     </div>
@@ -25,9 +25,5 @@
     <h2>You have no open bids.</h2>
   {% endfor %}
   </div>
-
-  {% for e, bid in bid_data %}
-    <p>{{ bid.description }} - {{ e }}</p>
-  {% endfor %}
 
   {% endblock %}

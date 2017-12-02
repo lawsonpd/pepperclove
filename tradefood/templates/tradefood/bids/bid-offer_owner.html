@@ -12,7 +12,7 @@
 {% endif %}
 
 {% if bid.is_alive %}
-  <form method="post" action="/accept-bid/{{ bid.pk }}/">
+  <form method="post" action="{% url 'accept-bid' bid.pk %}">
     {% csrf_token %}
     <input type="submit" value="Accept bid" />
   </form>

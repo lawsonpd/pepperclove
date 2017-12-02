@@ -11,7 +11,7 @@
           <p>{{ offer.description }}</p>
           <p>from {{ offer.merchant.name }}</p>
           <!-- <a href="/offers/{{ offer.pk }}/">Details</a> -->
-          <a href="/bid/{{ offer.pk }}/">Place a bid</a>
+          <a href="{% url 'submit-bid' offer.pk %}">Place a bid</a>
         </div>
       </div>
     </div>
