@@ -3,24 +3,28 @@
 {% block content %}
 
 <h1>My bids</h1>
+  <div class="row">
   {% for bid in bids %}
-    <div class="bid panel panel-default">
-      <div class="panel-body">
-        <p class="lead">
-          {{ bid.description }} for {{ bid.offer.description }} from {{ bid.offer.merchant.name }}
-          {% if not bid.is_alive %}
-            <span class="badge">Bid expired</span>
+    <div class="col-md-6">
+      <div class="bid panel panel-primary">
+        <div class="panel-body">
+          <p class="lead">
+            {{ bid.description }} for {{ bid.offer.description }} from {{ bid.offer.merchant.name }}
+            {% if not bid.is_alive %}
+              <span class="badge">Bid expired</span>
+            {% endif %}
+          </p>
+          {% if bid.accepted %}
+            <p class="lead"><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
           {% endif %}
-        </p>
-        {% if bid.accepted %}
-          <p class="lead"><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
-        {% endif %}
-        <a href="/bids/{{ bid.pk }}/">Details</a>
+          <a href="/bids/{{ bid.pk }}/">Details</a>
+        </div>
       </div>
     </div>
   {% empty %}
     <h2>You have no open bids.</h2>
   {% endfor %}
+  </div>
 
   {% for e, bid in bid_data %}
     <p>{{ bid.description }} - {{ e }}</p>

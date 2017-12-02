@@ -3,30 +3,30 @@
 {% block content %}
 
 <h1>My offers</h1>
+  <div class="row">
   {% for offer in offers %}
-    <div class="row">
-      <div class="col-md-6">
-        <div class="offer panel panel-default">
-          <div class="panel-body">
-            <h2>{{ offer.description }}
-              {% if offer.is_alive %}
-                {% if offer.bids.count > 0 %}
-                  <span class="badge">{{ offer.bids.count }}</span>
-                {% endif %}</h2>
+    <div class="col-md-6">
+      <div class="offer panel panel-primary">
+        <div class="panel-body">
+          <h2>{{ offer.description }}
+            {% if offer.is_alive %}
+              {% if offer.bids.count > 0 %}
+                <span class="badge">{{ offer.bids.count }}</span>
+              {% endif %}</h2>
+            {% else %}
+              {% if offer.bid_accepted %}
+                <p class="text-info"><strong>You accepted a bid for this offer.</strong></p>
               {% else %}
-                {% if offer.bid_accepted %}
-                  <p class="text-info"><strong>You accepted a bid for this offer.</strong></p>
-                {% else %}
-                  <p class="lead">This offer has expired.</p>
-                {% endif %}
+                <p class="lead">This offer has expired.</p>
               {% endif %}
-            <a href="/offers/{{ offer.pk }}/">Details</a>
-          </div>
+            {% endif %}
+          <a href="/offers/{{ offer.pk }}/">Details</a>
         </div>
       </div>
     </div>
   {% empty %}
     <h2>You have no open offers.</h2>
   {% endfor %}
+  </div>
 
 {% endblock %}

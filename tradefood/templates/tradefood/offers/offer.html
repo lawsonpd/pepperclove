@@ -22,14 +22,21 @@
       <li>{{ winning_bid.contact_phone }}</li>
     </ul>
   {% else %}
+    <h3>Bids:</h3>
+    <div class="row">
     {% for bid in bids %}
-      <h3>Bids:</h3>
-      <p class="lead">
-        <a href="/bids/{{ bid.pk}}/">{{ bid.description }}</a>
-        {% if not bid.is_alive %}
-          <span class="badge">Expired</span>
-        {% endif %}
-      </p>
+      <div class="col-md-6">
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <p>
+              <a href="/bids/{{ bid.pk}}/">{{ bid.description }}</a>
+              {% if not bid.is_alive %}
+                <span class="badge">Expired</span>
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
     {% empty %}
       <p>No bids.</p>
     {% endfor %}
