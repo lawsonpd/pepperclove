@@ -21,7 +21,7 @@ h1 .badge-text {
 }
 
 .nav-theme {
-  background-color: #1B8147;
+  background-color: #3C8D2F;
 }
 
 #bootstrap-overrides a {
@@ -33,15 +33,15 @@ h1 .badge-text {
 }
 
 .text-warning-custom {
-  color: #F5B973;
+  color: #AA6939;
 }
 
 body a {
-  color: #4D829B;
+  color: #42847D;
 }
 
 body a:hover {
-  color: #1D5672;
+  color: #0D4F48;
 }
 
 #bootstrap-overrides .navbar-toggle {
@@ -55,4 +55,13 @@ body a:hover {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
+}
+
+.panel-primary {
+  border-color: #97D38D;
+  border-width: 6px;
+}
+
+.text-info {
+  color: #42847D;
 }
