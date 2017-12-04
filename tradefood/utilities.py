@@ -15,7 +15,7 @@ def notify_offerer(offer, test=False):
   else:
     offer_url = 'localhost:8000/offers/{0}'.format(offer.pk)
   client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
-  message = client.message.create(
+  message = client.messages.create(
     offer.contact_phone,
     body="Hi, {0}! Someone has bid on your offer! Visit {1} for details.".format(offer.contact_name, offer_url),
     from_="+16156100586")
@@ -27,7 +27,7 @@ def notify_bidder(bid, test=False):
   else:
     bid_url = 'localhost:8000/bids/{0}'.format(bid.pk)
   client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
-  message = client.message.create(
+  message = client.messages.create(
     bid.contact_phone,
     body="Hi, {0}! {1} accepted your bid! Visit {2} for details.".format(offer.contact_name, bid.offer.merchant, bid_url),
     from_="+16156100586")

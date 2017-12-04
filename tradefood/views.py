@@ -249,6 +249,7 @@ def offer_details(request, offer_pk):
 
     this_offer = get_object_or_404(Offer, pk=offer_pk)
     try:
+      # check whether merch has already bid on this offer
       existing_bid = Bid.objects.get(
         offer=this_offer,
         merchant=merch
