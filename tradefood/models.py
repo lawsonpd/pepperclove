@@ -48,6 +48,7 @@ class Offer(models.Model):
   date_posted = models.DateTimeField()
   expiry = models.DateTimeField()
   bid_accepted = models.BooleanField(default=False)
+  sms_notifs = models.BooleanField(default=False)
 
   def is_alive(self):
     time_now = now()
@@ -66,6 +67,7 @@ class Bid(models.Model):
   accepted = models.BooleanField(default=False)
   date_posted = models.DateTimeField()
   expiry = models.DateTimeField()
+  sms_notifs = models.BooleanField(default=False)
 
   def is_alive(self):
     time_now = now()

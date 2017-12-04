@@ -41,6 +41,8 @@ RESOLVED 8. Do we even need to store the duration on the model? Can't we just as
 
 21. On /offers page, mark offers for which a bid has already been placed.
 
+22. Upload image with post/bid?
+
 
 TEST:
 - 

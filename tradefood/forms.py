@@ -31,6 +31,7 @@ class OfferFormCustom(forms.Form):
     widget=forms.Select,
     choices=DURATION_CHOICES,
   )
+  receive_sms_notifs = forms.BooleanField()
 
 class BidFormCustom(forms.Form):
   description = forms.CharField(label="Description", max_length=100)
@@ -42,6 +43,7 @@ class BidFormCustom(forms.Form):
     widget=forms.Select,
     choices=DURATION_CHOICES,
   )
+  receive_sms_notifs = forms.BooleanField()
 
 class EmailSignupForm(forms.Form):
   name = forms.CharField(max_length=50)
