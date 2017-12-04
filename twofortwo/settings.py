@@ -230,3 +230,9 @@ RAVEN_CONFIG = {
   # release based on the git info.
   # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
+
+with open(os.path.join(BASE_DIR, 'keys/twilio_sid.txt')) as f:
+  TWILIO_SID = f.read().strip()
+
+with open(os.path.join(BASE_DIR, 'keys/twilio_auth_token.txt')) as f:
+  TWILIO_AUTH_TOKEN = f.read().strip()

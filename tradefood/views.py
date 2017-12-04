@@ -124,6 +124,7 @@ def submit_bid(request, offer_pk):
       time_post = now()
       bid_expiry = time_post + timedelta(float(form_data['duration'])/24.0)
 
+      # needed since value can't be null
       rv = form_data['retail_value'] or None
 
       bid = Bid.objects.create(
@@ -137,6 +138,8 @@ def submit_bid(request, offer_pk):
         expiry=bid_expiry,
         sms_notifs=form_data['receive_sms_notifications']
       )
+
+      # send SMS notification to offer contact
 
       return redirect('/my-bids/')
   else:
@@ -169,6 +172,7 @@ def submit_offer(request):
       duration = timedelta(float(form_data['duration'])/24.0)
       offer_expiry = time_post + duration
 
+      # needed since value can't be null
       rv = form_data['retail_value'] or None
 
       offer = Offer.objects.create(
