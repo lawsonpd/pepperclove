@@ -10,7 +10,10 @@ def is_alive(obj):
 
 # send notification to offerer
 def notify_offerer(offer, test=False):
-  offer_url = 'http://pepperclove.club/offers/{0}'.format(offer.pk)
+  if not test:
+    offer_url = 'http://pepperclove.club/offers/{0}'.format(offer.pk)
+  else:
+    offer_url = 'localhost:8000/offers/{0}'.format(offer.pk)
   client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
   message = client.message.create(
     offer.contact_phone,
@@ -18,5 +21,13 @@ def notify_offerer(offer, test=False):
     from_="+16156100586")
 
 # send notification to bidder
-def notify_bidder(bid):
+def notify_bidder(bid, test=False):
+  if not test:
+    bid_url = 'http://pepperclove.club/bids/{0}'.format(bid.pk)
+  else:
+    bid_url = 'localhost:8000/bids/{0}'.format(bid.pk)
   client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
+  message = client.message.create(
+    bid.contact_phone,
+    body="{0} accepted your bid! Visit {1} for details.".format(bid.offer.merchant, bid_url),
+    from_="+16156100586")
