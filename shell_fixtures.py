@@ -1,3 +1,13 @@
-from tradefood.models import Bid, Offer, Merchant
+from django.utils.timezone import timedelta, now
 
-from django.utils import timezone, now
+from django.contrib.auth.models import User
+
+from tradefood.models import Merchant, Bid, Offer
+
+
+
+all_users = User.objects.all()
+
+all_offers = Offer.objects.all()
+
+all_bids = Bid.objects.all()

@@ -15,7 +15,7 @@
 
 {% if offer_owner %}
   {% if offer.bid_accepted %}
-    <p>You accepted the bid from {{ winning_bid.merchant.name }} for {{ winning_bid.description}}!</p>
+    <p class="text-info">You accepted the bid from {{ winning_bid.merchant.name }} for {{ winning_bid.description}}!</p>
     <p>Give them a call to arrange the trade:</p>
     <ul>
       <li>Contact {{ winning_bid.contact_name }}</li>
@@ -29,7 +29,7 @@
         <div class="panel panel-primary">
           <div class="panel-body">
             <p>
-              <a href="{% url 'bids' bid.pk %}">{{ bid.description }}</a>
+              <a href="{% url 'bid-details' bid.pk %}">{{ bid.description }}</a>
               {% if not bid.is_alive %}
                 <span class="badge">Expired</span>
               {% endif %}

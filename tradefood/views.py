@@ -140,7 +140,7 @@ def submit_bid(request, offer_pk):
       )
 
       # send SMS notification to offer contact
-      if this_offer.sms_notifs: notify_offerer(this_offer, test=True)
+      if this_offer.sms_notifs: notify_offerer(this_offer)
 
       return redirect('/my-bids/')
   else:
@@ -290,7 +290,7 @@ def accept_bid(request, bid_pk):
     if this_offer.merchant != merch:
       return render(request, 'tradefood/forbidden.html')
 
-    if bid_accepted:
+    if bid.accepted:
       return redirect('/my-offers/', {error_message: 'Bid already accepted.'})
 
     this_offer.bid_accepted = True
@@ -299,7 +299,7 @@ def accept_bid(request, bid_pk):
     bid.accepted = True
     bid.save()
 
-    if bid.sms_notifs: notify_bidder(bid, test=True)
+    if bid.sms_notifs: notify_bidder(bid)
 
     return render(
       request,

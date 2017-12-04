@@ -29,5 +29,5 @@ def notify_bidder(bid, test=False):
   client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
   message = client.messages.create(
     bid.contact_phone,
-    body="Hi, {0}! {1} accepted your bid! Visit {2} for details.".format(offer.contact_name, bid.offer.merchant, bid_url),
+    body="Hi, {0}! {1} accepted your bid! Visit {2} for details.".format(bid.contact_name, bid.offer.merchant.name, bid_url),
     from_="+16156100586")

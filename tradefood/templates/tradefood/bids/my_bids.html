@@ -10,14 +10,14 @@
         <div class="panel-body">
           <p class="lead">
             {{ bid.description }} for {{ bid.offer.description }} from {{ bid.offer.merchant.name }}
-            {% if not bid.is_alive %}
+            {% if not bid.is_alive and not bid.accepted %}
               <span class="badge">Bid expired</span>
             {% endif %}
           </p>
           {% if bid.accepted %}
-            <p class="lead"><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
+            <p class="lead text-info"><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
           {% endif %}
-          <a href="{% url 'bids' bid.pk %}">Details</a>
+          <a href="{% url 'bid-details' bid.pk %}">Details</a>
         </div>
       </div>
     </div>
