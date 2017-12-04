@@ -17,7 +17,7 @@ def notify_offerer(offer, test=False):
   client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
   message = client.message.create(
     offer.contact_phone,
-    body="Someone has bid on your offer! Visit {0} for details.".format(offer_url),
+    body="Hi, {0}! Someone has bid on your offer! Visit {1} for details.".format(offer.contact_name, offer_url),
     from_="+16156100586")
 
 # send notification to bidder when bid is accepted
@@ -29,5 +29,5 @@ def notify_bidder(bid, test=False):
   client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
   message = client.message.create(
     bid.contact_phone,
-    body="{0} accepted your bid! Visit {1} for details.".format(bid.offer.merchant, bid_url),
+    body="Hi, {0}! {1} accepted your bid! Visit {2} for details.".format(offer.contact_name, bid.offer.merchant, bid_url),
     from_="+16156100586")
