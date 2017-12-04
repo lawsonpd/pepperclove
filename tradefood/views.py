@@ -135,6 +135,7 @@ def submit_bid(request, offer_pk):
         contact_phone=form_data['contact_phone'],
         date_posted=time_post,
         expiry=bid_expiry,
+        sms_notifs=form_data['receive_sms_notifications']
       )
 
       return redirect('/my-bids/')
@@ -178,6 +179,7 @@ def submit_offer(request):
         contact_phone=form_data['contact_phone'],
         date_posted=time_post,
         expiry=offer_expiry,
+        sms_notifs=form_data['receive_sms_notifications']
       )
 
       return redirect('/my-offers/')
