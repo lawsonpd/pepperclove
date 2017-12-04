@@ -8,7 +8,7 @@ def is_alive(obj):
   time_now = now()
   return obj.date_posted + timedelta(obj.duration) > time_now
 
-# send notification to offerer
+# send notification to offerer when bid is placed
 def notify_offerer(offer, test=False):
   if not test:
     offer_url = 'http://pepperclove.club/offers/{0}'.format(offer.pk)
@@ -20,7 +20,7 @@ def notify_offerer(offer, test=False):
     body="Someone has bid on your offer! Visit {0} for details.".format(offer_url),
     from_="+16156100586")
 
-# send notification to bidder
+# send notification to bidder when bid is accepted
 def notify_bidder(bid, test=False):
   if not test:
     bid_url = 'http://pepperclove.club/bids/{0}'.format(bid.pk)

@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 from tradefood.forms import OfferFormCustom, BidFormCustom, EmailSignupForm
 from tradefood.models import Merchant, Offer, Bid, EmailSubscriber
-from tradefood.utilities import is_alive
+from tradefood.utilities import notify_offerer, notify_bidder
 
 # Create your views here.
 
@@ -140,6 +140,7 @@ def submit_bid(request, offer_pk):
       )
 
       # send SMS notification to offer contact
+      if this_offer.sms_notifs: notify_offerer(this_offer)
 
       return redirect('/my-bids/')
   else:
@@ -282,24 +283,28 @@ def accept_bid(request, bid_pk):
     merch = Merchant.objects.get(user=u)
 
     bid = Bid.objects.get(pk=bid_pk)
-    offer = bid.offer
+    this_offer = bid.offer
 
-    if offer.merchant != merch:
+    # prevent post requests from other merchants
+    if this_offer.merchant != merch:
       return render(request, 'tradefood/forbidden.html')
+
     if bid_accepted:
       return redirect('/my-offers/', {error_message: 'Bid already accepted.'})
 
-    offer.bid_accepted = True
-    offer.save()
+    this_offer.bid_accepted = True
+    this_offer.save()
 
     bid.accepted = True
     bid.save()
+
+    if bid.sms_notifs: notify_bidder(bid)
 
     return render(
       request,
       'tradefood/bids/bid_accepted.html',
       {
-        'offer_desc': offer.description,
+        'offer_desc': this_offer.description,
         'bid_desc': bid.description,
         'bidding_merchant': bid.merchant.name,
         'bid_contact_name': bid.contact_name,
