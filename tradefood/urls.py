@@ -17,6 +17,6 @@ urlpatterns = [
   url(r'^trade/$', views.submit_offer, name='submit-offer'),
   url(r'^accept-bid/(?P<bid_pk>\d+)/$', views.accept_bid, name='accept-bid'),
   # for let's encrypt
-  # url(r'^\.well-known/acme-challenge/Q4uR9oYEZ4l4jFjqhEa_mk6nUkNvtWf2iajClq13GOs/$', views.lets_encrypt),
+  # url(r'^\.well-known/acme-challenge/PkIk0KnC0ebCsF6d4QBaRnFXKstP4t7h7pynlrj860k/$', views.lets_encrypt),
   url(r'^how-it-works/$', views.how_it_works, name='how-it-works'),
 ]
