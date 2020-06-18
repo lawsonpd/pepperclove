@@ -145,7 +145,7 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # AUTH_USER_MODEL = 'tradefood.User'
@@ -233,8 +233,6 @@ RAVEN_CONFIG = {
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('PEPPERCLOVE_SECRET_KEY')
 
-with open(os.path.join(BASE_DIR, 'tradefood/keys/twilio_sid.txt')) as f:
-  TWILIO_SID = f.read().strip()
+TWILIO_SID = os.getenv('TWILIO_SID')
 
-with open(os.path.join(BASE_DIR, 'tradefood/keys/twilio_auth_token.txt')) as f:
-  TWILIO_AUTH_TOKEN = f.read().strip()
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')

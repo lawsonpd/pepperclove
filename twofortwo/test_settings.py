@@ -23,8 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!jf_xrx8jumel9-hu1dh&9w476xwhn)k^tuep405%k)13z)f5@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -149,7 +147,7 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # AUTH_USER_MODEL = 'tradefood.User'
@@ -231,6 +229,9 @@ RAVEN_CONFIG = {
     # release based on the git info.
     # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('PEPPERCLOVE_SECRET_KEY')
 
 with open(os.path.join(BASE_DIR, 'tradefood/keys/twilio_sid.txt')) as f:
   TWILIO_SID = f.read().strip()
