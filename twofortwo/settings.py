@@ -23,9 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!jf_xrx8jumel9-hu1dh&9w476xwhn)k^tuep405%k)13z)f5@'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -53,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
   'django.middleware.security.SecurityMiddleware',
+  'whitenoise.middleware.WhiteNoiseMiddleware',
   'django.contrib.sessions.middleware.SessionMiddleware',
   'django.middleware.common.CommonMiddleware',
   'django.middleware.csrf.CsrfViewMiddleware',
@@ -112,7 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
       'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
   },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -224,12 +221,17 @@ SERVER_EMAIL = 'errors@pepperclove.club'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # the default
 
+RAVEN_CREDS = os.getenv('RAVEN_CREDS')
+
 RAVEN_CONFIG = {
   'dsn': 'https://a886e6dea3914bf8a003326e120f690b:11ec7b41fcc64521b01ac9c5980601ae@sentry.io/248118',
   # If you are using git, you can also automatically configure the
   # release based on the git info.
   # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('PEPPERCLOVE_SECRET_KEY')
 
 with open(os.path.join(BASE_DIR, 'tradefood/keys/twilio_sid.txt')) as f:
   TWILIO_SID = f.read().strip()
