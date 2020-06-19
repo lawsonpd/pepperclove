@@ -83,10 +83,17 @@ WSGI_APPLICATION = 'twofortwo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+DB_PASSWORD = os.getenv('PEPPERCLOVE_DB_PASSWORD')
+
 DATABASES = {
   'default': {
       'ENGINE': 'django.db.backends.postgresql_psycopg2',
       # 'NAME': os.path.join(BASE_DIR, 'db.postgresql'),
+      'NAME': 'pepperclove',
+      'USER': 'pepperclove-admin',
+      'PASSWORD': DB_PASSWORD,
+      'HOST': '127.0.0.1',
+      'PORT': 5432,
   },
 }
 
