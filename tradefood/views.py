@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
+from django.urls import reverse
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -49,7 +50,7 @@ def register(request):
       category=form_data['category'],
     )
 
-    return redirect('/login/')
+    return redirect(reverse('tradefood:login'))
 
   else:
     return render(request, 'tradefood/auth/register.html')
@@ -78,7 +79,7 @@ def login_view(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
       login(request, user)
-      return redirect('/')
+      return redirect(reverse('tradefood:home'))
     else:
       return render(request, 'tradefood/auth/login.html', {'error_message': 'Invalid login'})
 
@@ -87,12 +88,12 @@ def login_view(request):
 
 def logout_view(request):
   logout(request)
-  return redirect('/')
+  return redirect(reverse('tradefood:home'))
 
 def home(request):
   return render(request, 'tradefood/home.html')
 
-@login_required(login_url='/login/')
+@login_required()
 def open_offers(request):
   u = User.objects.get(username=request.user)
   merch = Merchant.objects.get(user=u)
@@ -107,7 +108,7 @@ def open_offers(request):
 
   return render(request, 'tradefood/offers/offers.html', {'offers': offers})
 
-@login_required(login_url='/login/')
+@login_required()
 def submit_bid(request, offer_pk):
   if request.method == 'POST':
     form = BidFormCustom(request.POST)
@@ -160,7 +161,7 @@ def submit_bid(request, offer_pk):
       }
     )
 
-@login_required(login_url='/login/')
+@login_required()
 def submit_offer(request):
   if request.method == 'POST':
     form = OfferFormCustom(request.POST)
@@ -192,7 +193,7 @@ def submit_offer(request):
     form = OfferFormCustom()
   return render(request, 'tradefood/offers/trade.html', {'form': form})
 
-@login_required(login_url='/login/')
+@login_required()
 def my_bids(request):
   u = User.objects.get(username=request.user)
   merch = Merchant.objects.get(user=u)
@@ -210,7 +211,7 @@ def my_bids(request):
   # return render(request, 'tradefood/bids/my_bids.html', {'bid_data': zip(bids, e)})
   return render(request, 'tradefood/bids/my_bids.html', {'bids': bids})
 
-@login_required(login_url='/login/')
+@login_required()
 def my_offers(request):
   u = User.objects.get(username=request.user)
   merch = Merchant.objects.get(user=u)
@@ -227,7 +228,7 @@ def my_offers(request):
   # return render(request, 'tradefood/bids/my_offers.html', {'offer_data': zip(offers, e)})
   return render(request, 'tradefood/offers/my_offers.html', {'offers': offers})
 
-@login_required(login_url='/login/')
+@login_required()
 def bid_details(request, bid_pk):
   u = User.objects.get(username=request.user)
   merch = Merchant.objects.get(user=u)
@@ -241,7 +242,7 @@ def bid_details(request, bid_pk):
   else:
     return render(request, 'tradefood/forbidden.html')
 
-@login_required(login_url='/login/')
+@login_required()
 def offer_details(request, offer_pk):
   if request.method == 'GET':
     u = User.objects.get(username=request.user)
@@ -277,7 +278,7 @@ def offer_details(request, offer_pk):
 
     return render(request, 'tradefood/offers/offer.html', payload)
 
-@login_required(login_url='/login/')
+@login_required()
 def accept_bid(request, bid_pk):
   if request.method == 'POST':
     u = User.objects.get(username=request.user)

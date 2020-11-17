@@ -8,3 +8,4 @@ twofortwo/test_settings.py
 keys.txt
 venv
 .vscode
+test_database

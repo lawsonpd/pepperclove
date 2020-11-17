@@ -29,7 +29,7 @@
         <div class="panel panel-primary">
           <div class="panel-body">
             <p>
-              <a href="{% url 'bid-details' bid.pk %}">{{ bid.description }}</a>
+              <a href="{% url 'tradefood:bid-details' bid.pk %}">{{ bid.description }}</a>
               {% if not bid.is_alive %}
                 <span class="badge">Expired</span>
               {% endif %}
@@ -46,7 +46,7 @@
     {# probably want a link to the bid here #}
     <p class="text-warning">You've already bid on this offer.</p>
   {% else %}
-    <a href="{% url 'submit-bid' offer.pk %}">Place a bid</a>
+    <a href="{% url 'tradefood:submit-bid' offer.pk %}">Place a bid</a>
   {% endif %}
 {% endif %}
 

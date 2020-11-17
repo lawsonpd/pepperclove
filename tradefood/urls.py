@@ -4,8 +4,8 @@ from . import views
 
 app_name = 'tradefood'
 urlpatterns = [
-  # path('register/$', views.register, name='register'),
-  path('register/', views.temp_register_unavailable, name='register-unavail'),
+  path('register/', views.register, name='register'),
+  # path('register/', views.temp_register_unavailable, name='register-unavail'),
   path('login/', views.login_view, name='login'),
   path('logout/', views.logout_view, name='logout'),
   path('', views.home, name='home'),

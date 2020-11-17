@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
   'localhost',
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
   'django.contrib.staticfiles',
   'tradefood.apps.TradefoodConfig',
   'bootstrap3',
-  'raven.contrib.django.raven_compat',
+  # 'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -250,3 +250,5 @@ SECRET_KEY = os.getenv('PEPPERCLOVE_SECRET_KEY')
 TWILIO_SID = os.getenv('TWILIO_SID')
 
 TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+
+LOGIN_URL='/login/'
