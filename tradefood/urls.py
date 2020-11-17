@@ -20,4 +20,3 @@ urlpatterns = [
   # for let's encrypt
   # path('\.well-known/acme-challenge/Q4uR9oYEZ4l4jFjqhEa_mk6nUkNvtWf2iajClq13GOs/', views.lets_encrypt),
   path('how-it-works/', views.how_it_works, name='how-it-works'),
-]

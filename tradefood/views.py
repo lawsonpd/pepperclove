@@ -22,7 +22,7 @@ from tradefood.utilities import notify_offerer, notify_bidder
 
 @require_http_methods(['GET'])
 def lets_encrypt(request):
-  return HttpResponse('Q4uR9oYEZ4l4jFjqhEa_mk6nUkNvtWf2iajClq13GOs.LmpInhVWEg6vB1yJk-b8Bd8-yc7wkfxPeiMJwAVbZcQ')
+  return HttpResponse('PkIk0KnC0ebCsF6d4QBaRnFXKstP4t7h7pynlrj860k.LmpInhVWEg6vB1yJk-b8Bd8-yc7wkfxPeiMJwAVbZcQ')
 
 def how_it_works(request):
   return render(request, 'tradefood/info/how_it_works.html')
