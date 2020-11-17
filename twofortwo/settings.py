@@ -27,10 +27,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
   'localhost',
+  '127.0.0.1',
   'pepperclove.herokuapp.com',
   'pepperclove.club',
   'www.pepperclove.club',
@@ -89,22 +90,22 @@ WSGI_APPLICATION = 'twofortwo.wsgi.application'
 DB_PASSWORD = os.getenv('PEPPERCLOVE_DB_PASSWORD')
 
 DATABASES = {
-  # 'default': {
-  #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-  #     # 'NAME': os.path.join(BASE_DIR, 'db.postgresql'),
-  #     'NAME': 'pepperclove',
-  #     'USER': 'pepperclove-admin',
-  #     'PASSWORD': DB_PASSWORD,
-  #     'HOST': '127.0.0.1',
-  #     'PORT': 5432,
-  # },
   'default': {
+      # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+      'ENGINE': 'django.db.backends.postgresql',
+      'NAME': 'pepperclove-db',
+      'USER': 'pepperclove',
+      'PASSWORD': DB_PASSWORD,
+      'HOST': '127.0.0.1',
+      'PORT': 5432,
+  },
+  'test': {
     'ENGINE': 'django.db.backends.sqlite3',
     'NAME': 'test_database'
   }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
 DATABASES['default'].update(db_from_env)
 
 # Password validation
