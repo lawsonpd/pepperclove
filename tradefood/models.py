@@ -45,7 +45,7 @@ class Offer(models.Model):
   retail_value = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
   contact_name = models.CharField(max_length=30)
   contact_phone = models.CharField(max_length=16)
-  date_posted = models.DateTimeField()
+  date_posted = models.DateTimeField(auto_now_add=True)
   expiry = models.DateTimeField()
   bid_accepted = models.BooleanField(default=False)
   sms_notifs = models.BooleanField(default=False)
@@ -65,7 +65,7 @@ class Bid(models.Model):
   offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='bids')
   # accepted is True when bid is accepted for offer
   accepted = models.BooleanField(default=False)
-  date_posted = models.DateTimeField()
+  date_posted = models.DateTimeField(auto_now_add=True)
   expiry = models.DateTimeField()
   sms_notifs = models.BooleanField(default=False)
 

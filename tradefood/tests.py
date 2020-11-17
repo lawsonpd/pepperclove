@@ -138,7 +138,7 @@ class OfferTestCase2(TestCase):
 
     test_bid_data = {
       'description': 'cookies',
-      'offer': test_offer_object,
+      'offer': test_offer_data,
       'merchant': Merchant.objects.get(name='Test Merchant 2'),
       'retail_value': '0.0',
       'contact_name': 'Tom',
@@ -146,7 +146,8 @@ class OfferTestCase2(TestCase):
       'expiry': now() + timedelta(0.5/24.0)
     }
 
-    test_submit_bid_res = c.post('/bid/{0}'.format(test_submit_offer_res), test_bid_data)
+    # test_submit_bid_res = c.post('/bid/{0}'.format(test_submit_offer_res), test_bid_data)
+    test_submit_bid_res = c.post('/bid/1', test_bid_data)
 
     test_offer = Offer.objects.get(description='chicken')
     test_bid = Bid.objects.get(description='cookies')
