@@ -17,7 +17,7 @@
           {% if bid.accepted %}
             <p class="lead text-info"><strong>This bid was accepted! Follow details link below for contact info.</strong></p>
           {% endif %}
-          <a href="{% url 'bid-details' bid.pk %}">Details</a>
+          <a href="{% url 'tradefood:bid-details' bid.pk %}">Details</a>
         </div>
       </div>
     </div>

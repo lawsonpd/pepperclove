@@ -18,7 +18,7 @@ def notify_offerer(offer, test=False):
   message = client.messages.create(
     offer.contact_phone,
     body="Hi, {0}! Someone has bid on your offer! Visit {1} for details.".format(offer.contact_name, offer_url),
-    from_="+16156100586")
+    from_="+12184838230")
 
 # send notification to bidder when bid is accepted
 def notify_bidder(bid, test=False):
@@ -30,4 +30,4 @@ def notify_bidder(bid, test=False):
   message = client.messages.create(
     bid.contact_phone,
     body="Hi, {0}! {1} accepted your bid! Visit {2} for details.".format(bid.contact_name, bid.offer.merchant.name, bid_url),
-    from_="+16156100586")
+    from_="+12184838230")

@@ -10,7 +10,7 @@
 
     <h2>Time to get that trade on!</h2>
 
-    <p><a href="/trade/">Post</a> something or see what's being <a href="/offers/"> offered</a>
+    <p><a href="{% url 'tradefood:submit-offer' %}">Post</a> something or see what's being <a href="{% url 'tradefood:open-offers' %}"> offered</a>
 
   {% else %}
 
@@ -18,7 +18,7 @@
 
     <h2>where restaurants go to trade food</h2>
 
-    <p class="lead"><a href="/login">Log in</a> or <a href="/register/">register</a> to start trading.</p>
+    <p class="lead"><a href="{% url 'tradefood:login' %}">Log in</a> or <a href="{% url 'tradefood:register' %}">register</a> to start trading.</p>
 
   {% endif %}
 

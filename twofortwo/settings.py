@@ -16,6 +16,9 @@ import dj_database_url
 
 import raven
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -28,6 +31,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
   'localhost',
+  '127.0.0.1',
   'pepperclove.herokuapp.com',
   'pepperclove.club',
   'www.pepperclove.club',
@@ -45,7 +49,7 @@ INSTALLED_APPS = [
   'django.contrib.staticfiles',
   'tradefood.apps.TradefoodConfig',
   'bootstrap3',
-  'raven.contrib.django.raven_compat',
+  # 'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -87,17 +91,24 @@ DB_PASSWORD = os.getenv('PEPPERCLOVE_DB_PASSWORD')
 
 DATABASES = {
   'default': {
-      'ENGINE': 'django.db.backends.postgresql_psycopg2',
-      # 'NAME': os.path.join(BASE_DIR, 'db.postgresql'),
-      'NAME': 'pepperclove',
-      'USER': 'pepperclove-admin',
+      # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+      'ENGINE': 'django.db.backends.postgresql',
+      'NAME': 'pepperclove-db',
+      'USER': 'pepperclove',
       'PASSWORD': DB_PASSWORD,
       'HOST': '127.0.0.1',
       'PORT': 5432,
+      'TEST': {
+        # 'NAME': 'pepperclove-db',
+      },
   },
+  'test': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': 'test_database'
+  }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
 DATABASES['default'].update(db_from_env)
 
 # Password validation
@@ -243,3 +254,5 @@ SECRET_KEY = os.getenv('PEPPERCLOVE_SECRET_KEY')
 TWILIO_SID = os.getenv('TWILIO_SID')
 
 TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+
+LOGIN_URL='/login/'

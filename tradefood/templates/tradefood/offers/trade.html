@@ -8,7 +8,7 @@
 
 <div class="row">
   <div class="col-md-6 col-xs-8">
-    <form method="post" action="{% url 'submit-offer' %}">
+    <form method="post" action="{% url 'tradefood:submit-offer' %}">
       {% csrf_token %}
       {% bootstrap_form form layout='inline' %}
       {% buttons %}

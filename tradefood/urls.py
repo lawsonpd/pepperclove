@@ -1,22 +1,23 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
+app_name = 'tradefood'
 urlpatterns = [
-  # url(r'^register/$', views.register, name='register'),
-  url(r'^register/$', views.temp_register_unavailable, name='register-unavail'),
-  url(r'^login/$', views.login_view, name='login'),
-  url(r'^logout/$', views.logout_view, name='logout'),
-  url(r'^$', views.home, name='home'),
-  url(r'^offers/$', views.open_offers, name='open-offers'),
-  url(r'^offers/(?P<offer_pk>\d+)/$', views.offer_details, name='offer-details'),
-  url(r'^bid/(?P<offer_pk>\d+)/$', views.submit_bid, name='submit-bid'),
-  url(r'^bids/(?P<bid_pk>\d+)/$', views.bid_details, name='bid-details'),
-  url(r'^my-offers/$', views.my_offers, name='my-offers'),
-  url(r'^my-bids/$', views.my_bids, name='my-bids'),
-  url(r'^trade/$', views.submit_offer, name='submit-offer'),
-  url(r'^accept-bid/(?P<bid_pk>\d+)/$', views.accept_bid, name='accept-bid'),
+  path('register/', views.register, name='register'),
+  # path('register/', views.temp_register_unavailable, name='register-unavail'),
+  path('login/', views.login_view, name='login'),
+  path('logout/', views.logout_view, name='logout'),
+  path('', views.home, name='home'),
+  path('offers/', views.open_offers, name='open-offers'),
+  path('offers/<int:offer_pk>/', views.offer_details, name='offer-details'),
+  path('bid/<int:offer_pk>/', views.submit_bid, name='submit-bid'),
+  path('bids/<int:bid_pk>/', views.bid_details, name='bid-details'),
+  path('my-offers/', views.my_offers, name='my-offers'),
+  path('my-bids/', views.my_bids, name='my-bids'),
+  path('trade/', views.submit_offer, name='submit-offer'),
+  path('accept-bid/<int:bid_pk>/', views.accept_bid, name='accept-bid'),
   # for let's encrypt
-  # url(r'^\.well-known/acme-challenge/Q4uR9oYEZ4l4jFjqhEa_mk6nUkNvtWf2iajClq13GOs/$', views.lets_encrypt),
-  url(r'^how-it-works/$', views.how_it_works, name='how-it-works'),
+  # path('\.well-known/acme-challenge/Q4uR9oYEZ4l4jFjqhEa_mk6nUkNvtWf2iajClq13GOs/', views.lets_encrypt),
+  path('how-it-works/', views.how_it_works, name='how-it-works'),
 ]
