@@ -1,7 +1,7 @@
 *.sqlite3
 TODO
 users
-notes
+notes.txt
 twofortwo/test_settings.py
 *.pyc
 .env
@@ -9,3 +9,4 @@ keys.txt
 venv
 test_database
 .vscode
+gunicorn_error
