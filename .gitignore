@@ -7,5 +7,5 @@ twofortwo/test_settings.py
 .env
 keys.txt
 venv
-.vscode
 test_database
+.vscode
